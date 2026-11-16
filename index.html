@@ -1,0 +1,4333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0f14">
+  <title>Explore meu espaço</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  >
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0a0f14;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background: #0a0f14;
+    }
+
+    ::selection {
+      background: rgb(215 181 109 / 75%);
+      color: #0b1017;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border: 2px solid #0a0f14;
+      border-radius: 999px;
+      background: rgb(215 181 109 / 70%);
+    }
+
+    .quarto-container {
+      position: relative;
+      display: grid;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      isolation: isolate;
+      place-items: center;
+      background-color: #000;
+    }
+
+    .quarto-cena {
+      position: relative;
+      width: 100%;
+      max-width: min(100vw, calc(100vh * 16 / 9));
+      max-width: min(100vw, calc(100dvh * 16 / 9));
+      max-height: 100vh;
+      max-height: 100dvh;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      isolation: isolate;
+      background-color: #000;
+      margin: 0 auto;
+    }
+
+    .quarto-cena::before {
+      position: absolute;
+      z-index: 0;
+      inset: -2%;
+      background-image: url("./Imagens/quarto.jpg.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      content: "";
+      pointer-events: none;
+    }
+
+    .site-header {
+      position: fixed;
+      z-index: 10000;
+      top: 0;
+      display: none;
+      width: 100%;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px clamp(20px, 5vw, 76px);
+      border-bottom: 1px solid rgb(255 255 255 / 10%);
+      background: rgb(14 20 27 / 70%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .site-header__brand {
+      position: relative;
+      flex: 0 0 auto;
+      color: #d7b06a;
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      font-size: clamp(0.82rem, 1.25vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      text-decoration: none;
+      transition: text-shadow 250ms ease;
+    }
+
+    .site-header__brand:hover,
+    .site-header__brand:focus-visible {
+      text-shadow: 0 0 14px rgb(215 176 106 / 50%);
+    }
+
+    .site-header__nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(14px, 2.2vw, 34px);
+    }
+
+    .site-header__link {
+      position: relative;
+      padding: 8px 0;
+      color: #f1f3f5;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 250ms ease;
+    }
+
+    .site-header__link::after {
+      position: absolute;
+      right: 0;
+      bottom: 2px;
+      left: 0;
+      height: 1px;
+      background: #d7b56d;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 250ms ease;
+    }
+
+    .site-header__link:hover,
+    .site-header__link:focus-visible {
+      color: #f0d99e;
+    }
+
+    .site-header__link:hover::after,
+    .site-header__link:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    .site-header__link:focus-visible,
+    .site-header__brand:focus-visible {
+      outline: 2px solid #f0d99e;
+      outline-offset: 5px;
+    }
+
+    .scene__title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+
+    .site-footer {
+      position: fixed;
+      z-index: 9998;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-height: 14vh;
+      max-height: 14dvh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 4px clamp(20px, 5vw, 76px) max(3px, env(safe-area-inset-bottom));
+      border-top: 1px solid rgb(255 255 255 / 10%);
+      background: rgb(14 20 27 / 70%);
+      color: #a9b1bc;
+      font-family: Inter, system-ui, sans-serif;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .site-footer__columns {
+      display: flex;
+      width: min(1400px, 100%);
+      justify-content: space-between;
+      gap: 60px;
+      margin: 0 auto;
+    }
+
+    .site-footer__columns > * {
+      flex: 0 1 340px;
+      min-width: 0;
+    }
+
+    .site-footer__title {
+      margin: 0 0 4px;
+      color: #d7b06a;
+      font-size: 1rem;
+    }
+
+    .site-footer__brand {
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      font-size: 1rem;
+    }
+
+    .site-footer__description {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .site-footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .site-footer__link {
+      color: inherit;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+      text-decoration-color: transparent;
+      text-underline-offset: 4px;
+      transition: color 250ms ease, text-decoration-color 250ms ease;
+    }
+
+    .site-footer__link:hover,
+    .site-footer__link:focus-visible {
+      color: #d7b06a;
+      text-decoration-color: currentColor;
+    }
+
+    .site-footer__link:focus-visible {
+      outline: 2px solid #f0d99e;
+      outline-offset: 4px;
+    }
+
+    .site-footer__link i {
+      width: 1.25em;
+      margin-right: 8px;
+      color: #d7b06a;
+      text-align: center;
+    }
+
+    .site-footer__copyright {
+      width: min(1400px, 100%);
+      margin: 6px auto 0;
+      padding-top: 4px;
+      border-top: 1px solid rgb(255 255 255 / 10%);
+      font-size: 0.7rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .site-footer:focus-visible {
+      outline: 2px solid #f0d99e;
+      outline-offset: -3px;
+    }
+
+    @media (max-width: 700px) {
+      .site-footer__columns {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 6px clamp(16px, 5vw, 32px);
+      }
+
+      .site-footer__intro {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .hotspot {
+      position: absolute;
+      z-index: 10;
+      display: block;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: box-shadow 250ms ease;
+    }
+
+    .hotspot:hover {
+      box-shadow: 0 0 12px 2px rgb(89 207 255 / 45%);
+    }
+
+    .site-header.is-behind-modal {
+      z-index: 9998;
+    }
+
+    #modal-contato {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: none;
+      overflow-y: auto;
+      padding: 24px;
+      background: rgb(0 0 0 / 90%);
+      opacity: 0;
+      transform: scale(0.1);
+      transform-origin: var(--contact-origin-x, 10%) var(--contact-origin-y, 60%);
+      transition: all 0.5s ease;
+    }
+
+    #modal-contato.preparando,
+    #modal-contato.expandido {
+      display: block;
+    }
+
+    #modal-contato.expandido {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #modal-contato .modal-contato__viewport {
+      display: grid;
+      min-height: 100%;
+      place-items: center;
+    }
+
+    #modal-contato .modal-contato__phone {
+      position: relative;
+      width: min(320px, 100%);
+      height: auto;
+      min-height: 600px;
+      padding: 14px 20px 36px;
+      border: 8px solid #333;
+      border-radius: 40px;
+      background: #1a1a1a;
+      box-shadow: 0 28px 60px rgb(0 0 0 / 70%), inset 0 0 0 1px rgb(255 255 255 / 8%);
+      color: #f5f2ea;
+    }
+
+    #modal-contato .modal-contato__camera {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: clamp(56px, 30%, 90px);
+      height: 22px;
+      border-radius: 0 0 14px 14px;
+      background: #080808;
+      transform: translateX(-50%);
+    }
+
+    #modal-contato .modal-contato__status {
+      display: flex;
+      height: 22px;
+      align-items: center;
+      justify-content: space-between;
+      color: #f5f2ea;
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    #modal-contato .modal-contato__status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #modal-contato .modal-contato__signal {
+      width: 15px;
+      height: 11px;
+      background: linear-gradient(to top, currentColor 40%, transparent 40%) 0 100% / 3px 100%,
+        linear-gradient(to top, currentColor 60%, transparent 60%) 4px 100% / 3px 100%,
+        linear-gradient(to top, currentColor 80%, transparent 80%) 8px 100% / 3px 100%,
+        linear-gradient(currentColor, currentColor) 12px 100% / 3px 100%;
+      background-repeat: no-repeat;
+    }
+
+    #modal-contato .modal-contato__wifi {
+      width: 11px;
+      height: 11px;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-radius: 3px 0 0 0;
+      transform: rotate(45deg);
+    }
+
+    #modal-contato .modal-contato__battery {
+      position: relative;
+      width: 19px;
+      height: 10px;
+      border: 1px solid currentColor;
+      border-radius: 3px;
+    }
+
+    #modal-contato .modal-contato__battery::before {
+      position: absolute;
+      inset: 1px 3px 1px 1px;
+      border-radius: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    #modal-contato .modal-contato__battery::after {
+      position: absolute;
+      top: 2px;
+      right: -3px;
+      width: 2px;
+      height: 4px;
+      border-radius: 0 1px 1px 0;
+      background: currentColor;
+      content: "";
+    }
+
+    #modal-contato .modal-contato__phone::after {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      width: 96px;
+      height: 4px;
+      border-radius: 4px;
+      background: rgb(245 242 234 / 65%);
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    #modal-contato .modal-contato__close {
+      position: absolute;
+      top: 50px;
+      right: 18px;
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid rgb(215 176 106 / 25%);
+      border-radius: 50%;
+      background: #242424;
+      color: #f5f2ea;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.3rem;
+      line-height: 1;
+      transition: background-color 250ms ease, border-color 250ms ease, transform 250ms ease;
+    }
+
+    #modal-contato .modal-contato__close:hover {
+      transform: rotate(90deg);
+      border-color: #d7b06a;
+      background: #302a20;
+    }
+
+    #modal-contato .modal-contato__close:focus-visible,
+    #modal-contato .modal-contato__link:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: 3px;
+    }
+
+    #modal-contato .modal-contato__title {
+      margin: 60px 0 24px;
+      color: #f5f2ea;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    #modal-contato .modal-contato__links {
+      display: grid;
+      gap: 14px;
+    }
+
+    #modal-contato .modal-contato__link {
+      display: flex;
+      min-height: 54px;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 0.98rem;
+      font-weight: 650;
+      text-decoration: none;
+      transition: filter 250ms ease, transform 250ms ease;
+    }
+
+    #modal-contato .modal-contato__link:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+    }
+
+    #modal-contato .modal-contato__link i:first-child {
+      width: 24px;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    #modal-contato .modal-contato__link i:last-child {
+      margin-left: auto;
+      font-size: 0.8rem;
+      opacity: 0.75;
+    }
+
+    #modal-contato .modal-contato__link--whatsapp {
+      background: #25d366;
+      color: #082814;
+    }
+
+    #modal-contato .modal-contato__link--linkedin {
+      background: #0a66c2;
+    }
+
+    #modal-contato .modal-contato__link--email {
+      background: #7c3aed;
+    }
+
+    #modal-contato .modal-contato__link--github {
+      border-color: rgb(255 255 255 / 12%);
+      background: #24292f;
+    }
+
+    #modal-contato .modal-contato__link--curriculo {
+      width: 100%;
+      background: #d7b06a;
+      color: #111;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+    }
+
+    @media (max-width: 480px) {
+      #modal-contato {
+        padding: 16px;
+      }
+
+      #modal-contato .modal-contato__phone {
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #modal-contato,
+      #modal-contato .modal-contato__close,
+      #modal-contato .modal-contato__link {
+        transition-duration: 0.01ms;
+      }
+    }
+
+    #modal-projetos {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: none;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: clamp(24px, 5vw, 72px);
+      background: #0b1016;
+      color: #f3f0e8;
+      font-family: Inter, system-ui, sans-serif;
+      opacity: 0;
+      transition: opacity 350ms ease;
+    }
+
+    #modal-projetos.preparando,
+    #modal-projetos.expandido {
+      display: block;
+    }
+
+    #modal-projetos.expandido {
+      opacity: 1;
+    }
+
+    #modal-projetos .projetos__content {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 48px 0;
+      transform: scale(0.94);
+      transition: transform 350ms ease;
+    }
+
+    #modal-projetos.expandido .projetos__content {
+      transform: scale(1);
+    }
+
+    #modal-projetos .projetos__close {
+      position: fixed;
+      z-index: 1;
+      top: 20px;
+      right: 24px;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgb(215 176 106 / 35%);
+      border-radius: 50%;
+      background: #111b24;
+      color: #f3f0e8;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.5rem;
+    }
+
+    #modal-projetos .projetos__close:hover {
+      border-color: #d7b06a;
+      background: #192630;
+    }
+
+    #modal-projetos .projetos__close:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: 4px;
+    }
+
+    #modal-projetos .projetos__title {
+      margin: 0 0 32px;
+      color: #f3f0e8;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 500;
+    }
+
+    #grid-projetos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    #modal-projetos .projetos__card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgb(215 176 106 / 20%);
+      border-radius: 16px;
+      background: #111b24;
+      cursor: pointer;
+      transition: border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+    }
+
+    #modal-projetos .projetos__card:hover,
+    #modal-projetos .projetos__card:focus-visible {
+      border-color: #d7b06a;
+      box-shadow: 0 12px 28px rgb(0 0 0 / 30%), 0 0 12px rgb(215 176 106 / 20%);
+      transform: translateY(-4px);
+    }
+
+    #modal-projetos .projetos__card:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: 3px;
+    }
+
+    #modal-projetos .projetos__image {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    #modal-projetos .projetos__body {
+      padding: 22px;
+    }
+
+    #modal-projetos .projetos__card-title {
+      margin: 0;
+      color: #d7b06a;
+      font-size: 1.12rem;
+      line-height: 1.35;
+    }
+
+    #modal-projetos .projetos__description {
+      margin: 12px 0 18px;
+      color: #bac3c9;
+      line-height: 1.65;
+    }
+
+    #modal-projetos .projetos__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #modal-projetos .projetos__tags li {
+      padding: 6px 11px;
+      border: 1px solid rgb(215 176 106 / 26%);
+      border-radius: 999px;
+      color: #e7d4ad;
+      font-size: 0.8rem;
+    }
+
+    #modal-detalhes-projeto {
+      position: fixed;
+      z-index: 10000;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+      background: #0b1016;
+      color: #f3f0e8;
+      font-family: Inter, system-ui, sans-serif;
+      opacity: 0;
+      transform: scale(0.1);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    #modal-detalhes-projeto.preparando,
+    #modal-detalhes-projeto.expandido {
+      display: block;
+    }
+
+    #modal-detalhes-projeto.expandido {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .detalhe-projeto__content {
+      width: min(944px, 100%);
+      height: 100%;
+      margin: 0 auto;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 80px clamp(24px, 5vw, 72px) 48px;
+    }
+
+    .detalhe-projeto__content:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: -4px;
+    }
+
+    .detalhe-projeto__close {
+      position: absolute;
+      z-index: 1;
+      top: 20px;
+      right: 24px;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgb(215 176 106 / 35%);
+      border-radius: 50%;
+      background: #111b24;
+      color: #f3f0e8;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.5rem;
+    }
+
+    .detalhe-projeto__close:hover {
+      border-color: #d7b06a;
+      background: #192630;
+    }
+
+    .detalhe-projeto__close:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: 4px;
+    }
+
+    #detalhe-titulo {
+      margin: 0 0 20px;
+      color: #d7b06a;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+    }
+
+    #detalhe-texto {
+      max-width: 65ch;
+      margin: 0 0 32px;
+      color: #bac3c9;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    #detalhe-imagens {
+      display: grid;
+      gap: 24px;
+    }
+
+    #detalhe-imagens img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 380px) {
+      #grid-projetos {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #modal-projetos,
+      #modal-detalhes-projeto,
+      #modal-projetos .projetos__content,
+      #modal-projetos .projetos__card {
+        transition-duration: 0.01ms;
+      }
+
+      #modal-projetos .projetos__card:hover {
+        transform: none;
+      }
+    }
+
+    #modal-inicio {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+      background: #0b1016;
+      color: #f3f0e8;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      opacity: 0;
+      transform: scale(0.1);
+      transform-origin: var(--modal-origin-x, 70%) var(--modal-origin-y, 20%);
+      filter: blur(5px);
+      transition: all 0.6s ease-in-out;
+    }
+
+    #modal-inicio .modal-inicio__scroll {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: clamp(24px, 5vw, 72px);
+    }
+
+    #modal-inicio.preparando,
+    #modal-inicio.expandido {
+      display: block;
+    }
+
+    #modal-inicio.expandido {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0px);
+    }
+
+    #modal-inicio .modal-inicio__content {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      padding: clamp(38px, 7vh, 76px) 0 56px;
+    }
+
+    #modal-inicio .modal-inicio__close {
+      position: absolute;
+      z-index: 1;
+      top: 20px;
+      right: 24px;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgb(215 176 106 / 35%);
+      border-radius: 50%;
+      background: #111b24;
+      color: #f3f0e8;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.5rem;
+      line-height: 1;
+      transition: background-color 250ms ease, border-color 250ms ease, transform 250ms ease;
+    }
+
+    #modal-inicio .modal-inicio__close:hover {
+      border-color: #d7b06a;
+      background: #192630;
+      transform: rotate(90deg);
+    }
+
+    #modal-inicio .modal-inicio__close:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: 4px;
+    }
+
+    #modal-inicio .modal-inicio__eyebrow {
+      margin: 0 0 16px;
+      color: #d7b06a;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    #modal-inicio .modal-inicio__title {
+      max-width: 820px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 1.04;
+    }
+
+    #modal-inicio .modal-inicio__summary {
+      max-width: 720px;
+      margin: 0 0 26px;
+      color: #bac3c9;
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.75;
+    }
+
+    #modal-inicio .modal-inicio__tags,
+    #modal-inicio .modal-inicio__skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 26px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #modal-inicio .modal-inicio__tag,
+    #modal-inicio .modal-inicio__skill {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      padding: 7px 13px;
+      border: 1px solid rgb(215 176 106 / 26%);
+      border-radius: 999px;
+      background: rgb(17 27 36 / 75%);
+      color: #e7d4ad;
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
+    #modal-inicio .modal-inicio__section {
+      margin-top: clamp(48px, 8vw, 84px);
+    }
+
+    #modal-inicio .modal-inicio__section-title {
+      margin: 0 0 22px;
+      color: #f3f0e8;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+    }
+
+    #modal-inicio .modal-inicio__about-heading {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    #modal-inicio .foto-modal {
+      width: 150px;
+      height: 150px;
+      flex: 0 0 auto;
+      border: 2px solid rgb(215 176 106 / 65%);
+      border-radius: 50%;
+      box-shadow: 0 12px 32px rgb(0 0 0 / 35%), 0 0 0 5px rgb(215 176 106 / 8%);
+      object-fit: cover;
+    }
+
+    #modal-inicio .modal-inicio__about-heading .modal-inicio__section-title {
+      margin-bottom: 0;
+    }
+
+    #modal-inicio .modal-inicio__stats,
+    #modal-inicio .modal-inicio__about {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    #modal-inicio .modal-inicio__about {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #modal-inicio .modal-inicio__card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid rgb(215 176 106 / 16%);
+      border-radius: 14px;
+      background: #111b24;
+      transition: border-color 250ms ease, transform 250ms ease;
+    }
+
+    #modal-inicio .modal-inicio__card:hover {
+      border-color: rgb(215 176 106 / 45%);
+      transform: translateY(-3px);
+    }
+
+    #modal-inicio .modal-inicio__stat-value {
+      display: block;
+      color: #d7b06a;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      line-height: 1.1;
+    }
+
+    #modal-inicio .modal-inicio__stat-label {
+      display: block;
+      margin-top: 9px;
+      color: #bac3c9;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    #modal-inicio .modal-inicio__card-title {
+      margin: 0;
+      color: #e7d4ad;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    #modal-inicio .modal-inicio__card-copy {
+      margin: 12px 0 0;
+      color: #bac3c9;
+      font-size: 0.91rem;
+      line-height: 1.7;
+    }
+
+    #modal-inicio .modal-inicio__skills {
+      margin-top: 0;
+      gap: 12px;
+    }
+
+    @media (max-width: 760px) {
+      #modal-inicio .modal-inicio__scroll {
+        padding: 24px;
+      }
+
+      #modal-inicio .modal-inicio__content {
+        padding-top: 68px;
+      }
+
+      #modal-inicio .modal-inicio__stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #modal-inicio .modal-inicio__about {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      #modal-inicio .foto-modal {
+        width: 120px;
+        height: 120px;
+      }
+
+      #modal-inicio .modal-inicio__about-heading {
+        gap: 18px;
+      }
+
+      #modal-inicio .modal-inicio__card {
+        padding: 19px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      #modal-inicio .modal-inicio__scroll {
+        padding: 18px;
+      }
+
+      #modal-inicio .modal-inicio__stats {
+        gap: 10px;
+      }
+
+      #modal-inicio .foto-modal {
+        width: 100px;
+        height: 100px;
+      }
+
+      #modal-inicio .modal-inicio__stat-label {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #modal-inicio,
+      #modal-inicio .modal-inicio__card,
+      #modal-inicio .modal-inicio__close {
+        transition-duration: 0.01ms;
+      }
+    }
+
+    #modal-curriculo {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+      background: #0b1016;
+      color: #f3f0e8;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      opacity: 0;
+      transform: scale(0.1);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    #modal-curriculo.preparando,
+    #modal-curriculo.expandido {
+      display: block;
+    }
+
+    #modal-curriculo.expandido {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .modal-curriculo__scroll {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: clamp(20px, 5vw, 72px);
+    }
+
+    .modal-curriculo__content {
+      width: min(960px, 100%);
+      margin: 0 auto;
+      padding: clamp(72px, 9vh, 96px) 0 56px;
+    }
+
+    .modal-curriculo__close {
+      position: fixed;
+      z-index: 1;
+      top: 20px;
+      right: 24px;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgb(215 176 106 / 35%);
+      border-radius: 50%;
+      background: #111b24;
+      color: #f3f0e8;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.5rem;
+      line-height: 1;
+      transition: background-color 250ms ease, border-color 250ms ease, transform 250ms ease;
+    }
+
+    .modal-curriculo__close:hover {
+      border-color: #d7b06a;
+      background: #192630;
+      transform: rotate(90deg);
+    }
+
+    .modal-curriculo__close:focus-visible,
+    .modal-curriculo__download:focus-visible {
+      outline: 2px solid #d7b06a;
+      outline-offset: 4px;
+    }
+
+    .modal-curriculo__title {
+      margin: 0;
+      color: #f3f0e8;
+      font-size: clamp(1.8rem, 5vw, 3.25rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 1.1;
+    }
+
+    .modal-curriculo__role {
+      max-width: 720px;
+      margin: 14px 0 0;
+      color: #d7b06a;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .modal-curriculo__contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin: 18px 0 0;
+      color: #c4cbd0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .modal-curriculo__contacts a {
+      color: inherit;
+      text-decoration-color: rgb(215 176 106 / 55%);
+      text-underline-offset: 4px;
+    }
+
+    .modal-curriculo__download {
+      display: inline-flex;
+      min-height: 56px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+      padding: 14px 24px;
+      border: 1px solid #e8c986;
+      border-radius: 10px;
+      background: #d7b06a;
+      box-shadow: 0 12px 28px rgb(0 0 0 / 28%);
+      color: #17140e;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 200ms ease, transform 200ms ease;
+    }
+
+    .modal-curriculo__download:hover {
+      background: #e4c47f;
+      transform: translateY(-2px);
+    }
+
+    .modal-curriculo__section {
+      margin-top: clamp(40px, 6vw, 58px);
+    }
+
+    .modal-curriculo__section h2 {
+      margin: 0 0 18px;
+      color: #d7b06a;
+      font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .modal-curriculo__section p,
+    .modal-curriculo__section li {
+      color: #c4cbd0;
+      font-size: 0.97rem;
+      line-height: 1.75;
+    }
+
+    .modal-curriculo__section p {
+      max-width: 75ch;
+      margin: 0;
+    }
+
+    .modal-curriculo__experience-title {
+      margin: 0 0 14px;
+      color: #f3f0e8;
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+
+    .modal-curriculo__list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .modal-curriculo__list li::marker {
+      color: #d7b06a;
+    }
+
+    .modal-curriculo__details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .modal-curriculo__detail {
+      padding-top: 18px;
+      border-top: 1px solid rgb(215 176 106 / 25%);
+    }
+
+    .modal-curriculo__detail h2 {
+      margin-bottom: 12px;
+    }
+
+    .modal-curriculo__skills {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .modal-curriculo__skill-group {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid rgb(215 176 106 / 20%);
+      border-radius: 12px;
+      background: #111b24;
+    }
+
+    .modal-curriculo__skill-group h3 {
+      margin: 0 0 9px;
+      color: #e7d4ad;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .modal-curriculo__skill-group p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 600px) {
+      .modal-curriculo__scroll {
+        padding: 16px;
+      }
+
+      .modal-curriculo__content {
+        padding-top: 76px;
+      }
+
+      .modal-curriculo__close {
+        top: 14px;
+        right: 16px;
+      }
+
+      .modal-curriculo__details,
+      .modal-curriculo__skills {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .modal-curriculo__download {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #modal-curriculo,
+      .modal-curriculo__close,
+      .modal-curriculo__download {
+        transition-duration: 0.01ms;
+      }
+    }
+
+    #modal-contato,
+    #modal-projetos,
+    #modal-detalhes-projeto,
+    #modal-inicio,
+    #modal-curriculo {
+      background-color: #0a0f1a;
+      background-image: radial-gradient(ellipse at 85% 0%, rgb(139 92 246 / 14%), transparent 48%),
+        radial-gradient(ellipse at 5% 90%, rgb(89 207 255 / 9%), transparent 48%);
+    }
+
+    #modal-contato .modal-contato__phone {
+      border-color: #27394b;
+      background: #0d111c;
+      box-shadow: 0 28px 60px rgb(0 0 0 / 70%), 0 0 24px rgb(89 207 255 / 14%);
+    }
+
+    #modal-contato .modal-contato__title,
+    #modal-projetos .projetos__title,
+    #modal-detalhes-projeto #detalhe-titulo,
+    #modal-inicio .modal-inicio__title,
+    #modal-inicio .modal-inicio__section-title,
+    #modal-curriculo .modal-curriculo__title,
+    #modal-curriculo .modal-curriculo__section h2 {
+      color: #59cfff;
+      text-shadow: 0 0 14px rgb(89 207 255 / 24%);
+    }
+
+    #modal-inicio .modal-inicio__eyebrow,
+    #modal-inicio .modal-inicio__stat-value,
+    #modal-inicio .modal-inicio__card-title,
+    #modal-projetos .projetos__card-title,
+    #modal-curriculo .modal-curriculo__role,
+    #modal-curriculo .modal-curriculo__skill-group h3 {
+      color: #83d9ff;
+    }
+
+    #modal-inicio .modal-inicio__summary,
+    #modal-inicio .modal-inicio__stat-label,
+    #modal-inicio .modal-inicio__card-copy,
+    #modal-projetos .projetos__description,
+    #modal-detalhes-projeto #detalhe-texto,
+    #modal-curriculo .modal-curriculo__contacts,
+    #modal-curriculo .modal-curriculo__section p,
+    #modal-curriculo .modal-curriculo__section li {
+      color: #a9b1bc;
+    }
+
+    #modal-inicio .modal-inicio__tag,
+    #modal-inicio .modal-inicio__skill,
+    #modal-projetos .projetos__tags li {
+      border-color: rgb(89 207 255 / 30%);
+      background: rgb(15 29 47 / 85%);
+      color: #c1eaff;
+    }
+
+    #modal-inicio .foto-modal {
+      border-color: rgb(89 207 255 / 65%);
+      box-shadow: 0 12px 32px rgb(0 0 0 / 35%), 0 0 0 5px rgb(89 207 255 / 10%);
+    }
+
+    #modal-inicio .modal-inicio__card,
+    #modal-curriculo .modal-curriculo__skill-group,
+    #modal-projetos .projetos__card {
+      border-color: rgb(89 207 255 / 24%);
+      background: #101b2c;
+    }
+
+    #modal-projetos .projetos__card {
+      box-shadow: 0 8px 24px rgb(0 0 0 / 24%), 0 0 15px rgb(89 207 255 / 16%);
+    }
+
+    #modal-projetos .projetos__card:hover,
+    #modal-projetos .projetos__card:focus-visible,
+    #modal-inicio .modal-inicio__card:hover {
+      border-color: #59cfff;
+      box-shadow: 0 12px 28px rgb(0 0 0 / 30%), 0 0 18px rgb(89 207 255 / 30%);
+    }
+
+    #modal-contato .modal-contato__close,
+    #modal-projetos .projetos__close,
+    #modal-detalhes-projeto .detalhe-projeto__close,
+    #modal-inicio .modal-inicio__close,
+    #modal-curriculo .modal-curriculo__close {
+      border-color: rgb(89 207 255 / 40%);
+      background: #101b2c;
+      color: #e8f7ff;
+    }
+
+    #modal-contato .modal-contato__close:hover,
+    #modal-projetos .projetos__close:hover,
+    #modal-detalhes-projeto .detalhe-projeto__close:hover,
+    #modal-inicio .modal-inicio__close:hover,
+    #modal-curriculo .modal-curriculo__close:hover {
+      border-color: #59cfff;
+      background: #182b42;
+    }
+
+    #modal-contato :focus-visible,
+    #modal-projetos :focus-visible,
+    #modal-detalhes-projeto :focus-visible,
+    #modal-inicio :focus-visible,
+    #modal-curriculo :focus-visible {
+      outline-color: #59cfff;
+    }
+
+    #modal-curriculo .modal-curriculo__contacts a {
+      text-decoration-color: rgb(89 207 255 / 65%);
+    }
+
+    #modal-curriculo .modal-curriculo__list li::marker {
+      color: #59cfff;
+    }
+
+    #modal-curriculo .modal-curriculo__detail {
+      border-color: rgb(89 207 255 / 25%);
+    }
+
+    #modal-curriculo .modal-curriculo__download,
+    #modal-contato .modal-contato__link--curriculo {
+      border-color: #83d9ff;
+      background: #59cfff;
+      color: #071321;
+    }
+
+    #modal-curriculo .modal-curriculo__download:hover,
+    #modal-contato .modal-contato__link--curriculo:hover {
+      background: #83d9ff;
+    }
+
+    #modal-curriculo .modal-curriculo__download,
+    #modal-contato .modal-contato__link {
+      box-shadow: 0 5px 16px rgb(0 0 0 / 25%), 0 0 15px rgb(89 207 255 / 25%);
+    }
+
+    @keyframes modal-neon-fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes modal-neon-glow {
+      0%, 100% {
+        text-shadow: 0 0 14px rgb(89 207 255 / 24%);
+      }
+
+      50% {
+        text-shadow: 0 0 18px rgb(89 207 255 / 65%), 0 0 30px rgb(139 92 246 / 30%);
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      #modal-contato.expandido .modal-contato__title,
+      #modal-contato.expandido .modal-contato__link,
+      #modal-projetos.expandido .projetos__title,
+      #modal-projetos.expandido .projetos__card,
+      #modal-detalhes-projeto.expandido .detalhe-projeto__content > *,
+      #modal-inicio.expandido .modal-inicio__hero > *,
+      #modal-inicio.expandido .modal-inicio__about-heading,
+      #modal-inicio.expandido .modal-inicio__summary,
+      #modal-inicio.expandido .modal-inicio__section-title,
+      #modal-inicio.expandido .modal-inicio__card,
+      #modal-inicio.expandido .modal-inicio__skills,
+      #modal-curriculo.expandido .modal-curriculo__content > header > *,
+      #modal-curriculo.expandido .modal-curriculo__section {
+        animation: modal-neon-fade-up 500ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      }
+
+      #modal-contato.expandido .modal-contato__link:nth-child(2),
+      #modal-projetos.expandido .projetos__card:nth-child(2),
+      #modal-detalhes-projeto.expandido .detalhe-projeto__content > :nth-child(2),
+      #modal-inicio.expandido .modal-inicio__hero > :nth-child(2),
+      #modal-inicio.expandido .modal-inicio__card:nth-child(2),
+      #modal-curriculo.expandido .modal-curriculo__content > header > :nth-child(2),
+      #modal-curriculo.expandido .modal-curriculo__section:nth-child(2) {
+        animation-delay: 60ms;
+      }
+
+      #modal-contato.expandido .modal-contato__link:nth-child(3),
+      #modal-projetos.expandido .projetos__card:nth-child(3),
+      #modal-detalhes-projeto.expandido .detalhe-projeto__content > :nth-child(3),
+      #modal-inicio.expandido .modal-inicio__hero > :nth-child(3),
+      #modal-inicio.expandido .modal-inicio__card:nth-child(3),
+      #modal-curriculo.expandido .modal-curriculo__content > header > :nth-child(3),
+      #modal-curriculo.expandido .modal-curriculo__section:nth-child(3) {
+        animation-delay: 120ms;
+      }
+
+      #modal-contato.expandido .modal-contato__link:nth-child(4),
+      #modal-projetos.expandido .projetos__card:nth-child(4),
+      #modal-inicio.expandido .modal-inicio__card:nth-child(4),
+      #modal-curriculo.expandido .modal-curriculo__content > header > :nth-child(4),
+      #modal-curriculo.expandido .modal-curriculo__section:nth-child(4) {
+        animation-delay: 180ms;
+      }
+
+      #modal-contato.expandido .modal-contato__link:nth-child(5),
+      #modal-projetos.expandido .projetos__card:nth-child(5),
+      #modal-curriculo.expandido .modal-curriculo__section:nth-child(5) {
+        animation-delay: 240ms;
+      }
+
+      #modal-contato.expandido .modal-contato__title,
+      #modal-projetos.expandido .projetos__title,
+      #modal-detalhes-projeto.expandido #detalhe-titulo,
+      #modal-inicio.expandido .modal-inicio__title,
+      #modal-curriculo.expandido .modal-curriculo__content > header > .modal-curriculo__title {
+        animation-name: modal-neon-fade-up, modal-neon-glow;
+        animation-duration: 500ms, 1.2s;
+        animation-iteration-count: 1, 2;
+      }
+    }
+
+    #gif-cachorro,
+    #gif-fone,
+    #gif-monitor,
+    #gif-monitor2,
+    #gif-tv {
+      position: absolute;
+      z-index: 1;
+      display: block;
+      object-fit: contain;
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    #hotspot-pc {
+      top: 30.48%;
+      left: 6.85%;
+      width: 28.51%;
+      height: 37.35%;
+      transform: rotate(0deg) skew(0deg);
+    }
+
+    #gif-monitor {
+      top: 30.48%;
+      left: 6.85%;
+      width: 28.51%;
+      height: 37.35%;
+    }
+
+    #hotspot-monitor2 {
+      top: 36.8717%;
+      left: 32.8507%;
+      width: 10.3404%;
+      height: 18.4094%;
+      z-index: 9999;
+      background: transparent;
+      cursor: pointer;
+      transform: perspective(1000px) rotateY(-2deg) skew(-0.2deg, -0.2deg);
+    }
+
+    #gif-monitor2 {
+      top: 35.4961%;
+      left: 26.8388%;
+      width: 22.4833%;
+      height: 28.993%;
+      transform: perspective(1000px) rotateY(-2deg) skew(-0.2deg, -0.2deg);
+    }
+
+    #hotspot-celular {
+      top: 53.0109%;
+      left: 3.03571%;
+      width: 8.74535%;
+      height: 24.9702%;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      #hotspot-celular:hover #gif-celular {
+        animation: vibrar-celular 150ms linear infinite;
+      }
+    }
+
+    @keyframes vibrar-celular {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-1px); }
+      75% { transform: translateX(1px); }
+    }
+
+    #gif-fone {
+      top: 16.51%;
+      left: 44.70%;
+      width: 9.82%;
+      height: 20.53%;
+    }
+
+    #hotspot-tv {
+      top: 17.0602%;
+      left: 72.0369%;
+      width: 20.8398%;
+      height: 28.0705%;
+      z-index: 9999;
+      background: transparent;
+      cursor: pointer;
+      transform: perspective(800px) rotateY(-15deg) skew(0deg, -2deg);
+    }
+
+    #gif-tv {
+      top: 14.2047%;
+      left: 64.1804%;
+      width: 35.6632%;
+      height: 32.1975%;
+      transform: perspective(800px) rotateY(-15deg) skew(0deg, -2deg);
+    }
+
+    #gif-cachorro {
+      top: 66.56%;
+      left: 63.69%;
+      width: 37.98%;
+      height: 33.44%;
+      transform: rotate(0deg) skew(0deg, 0deg);
+    }
+
+    #janela-jogo {
+      position: fixed;
+      z-index: 30000;
+      inset: 0;
+      display: none;
+      overflow: auto;
+      place-items: center;
+      padding: 20px;
+      background: #000;
+      color: #f3f6ff;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      opacity: 0;
+      transition: opacity 260ms ease;
+    }
+
+    #janela-jogo.is-visible {
+      display: grid;
+    }
+
+    #janela-jogo.is-open {
+      opacity: 1;
+    }
+
+    .game-modal__panel {
+      position: relative;
+      width: min(960px, 100%);
+      padding: clamp(18px, 3vw, 32px);
+      border: 1px solid rgb(89 207 255 / 35%);
+      border-radius: 20px;
+      background: #090d19;
+      box-shadow: 0 24px 80px rgb(71 39 180 / 30%), 0 0 32px rgb(42 221 255 / 12%);
+      opacity: 0;
+      transform: scale(0.04);
+      transform-origin: var(--game-origin-x, 50%) var(--game-origin-y, 50%);
+      transition:
+        opacity 220ms ease,
+        transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #janela-jogo.is-open .game-modal__panel {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .game-modal__close {
+      position: absolute;
+      z-index: 1;
+      top: 12px;
+      right: 12px;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgb(89 207 255 / 45%);
+      border-radius: 50%;
+      background: #11182a;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.55rem;
+      line-height: 1;
+      transition: background 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+    }
+
+    .game-modal__close:hover,
+    .game-modal__close:focus-visible {
+      background: #202b45;
+      box-shadow: 0 0 18px rgb(89 207 255 / 45%);
+      transform: translateY(-2px);
+    }
+
+    .game-modal__close:focus-visible {
+      outline: 2px solid #8bff4a;
+      outline-offset: 3px;
+    }
+
+    .game-modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-right: 48px;
+    }
+
+    .game-modal__title {
+      margin: 0;
+      color: #8bff4a;
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      line-height: 1.15;
+      text-shadow: 0 0 18px rgb(139 255 74 / 35%);
+    }
+
+    .game-modal__subtitle {
+      margin: 8px 0 0;
+      color: #c5d0e7;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .game-modal__score {
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 9px 13px;
+      border: 1px solid rgb(255 210 63 / 45%);
+      border-radius: 999px;
+      color: #ffe27a;
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .game-modal__canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: 20px;
+      overflow: hidden;
+      border: 1px solid rgb(91 114 255 / 55%);
+      border-radius: 12px;
+      background: #070a13;
+      box-shadow: 0 0 24px rgb(73 81 255 / 15%);
+    }
+
+    .game-modal__hint,
+    .game-modal__message {
+      margin: 12px 0 0;
+      color: #c5d0e7;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .game-modal__message {
+      min-height: 1.5em;
+      color: #8bff4a;
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      #janela-jogo {
+        padding: 12px;
+      }
+
+      .game-modal__panel {
+        padding: 16px;
+        border-radius: 15px;
+      }
+
+      .game-modal__header {
+        display: block;
+        padding-right: 42px;
+      }
+
+      .game-modal__score {
+        display: inline-block;
+        margin-top: 12px;
+      }
+
+      .game-modal__canvas {
+        margin-top: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #janela-jogo,
+      .game-modal__panel,
+      .game-modal__close {
+        transition-duration: 0.01ms;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .site-header {
+        min-height: 88px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px 18px 8px;
+      }
+
+      .site-header__brand {
+        font-size: 0.78rem;
+      }
+
+      .site-header__nav {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 18px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .site-header__nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .site-header__link {
+        padding: 5px 0;
+        font-size: 0.75rem;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+    }
+
+    .orientation-hint {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .quarto-container {
+        width: 100vw;
+        height: 100dvh;
+      }
+
+      .quarto-cena {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        aspect-ratio: auto;
+      }
+
+      .hotspot {
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+
+      #modal-contato {
+        width: 100vw;
+        height: 100dvh;
+        padding: 16px;
+      }
+
+      #modal-contato .modal-contato__phone {
+        width: min(420px, 100%);
+        min-height: min(600px, calc(100dvh - 32px));
+        border-radius: 32px;
+      }
+
+      #modal-contato .modal-contato__close {
+        width: 44px;
+        height: 44px;
+      }
+
+      #modal-projetos {
+        width: 100vw;
+        height: 100dvh;
+        padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+      }
+
+      #modal-projetos .projetos__content {
+        padding: 68px 0 32px;
+      }
+
+      #modal-projetos .projetos__close {
+        top: max(12px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
+      }
+
+      #grid-projetos {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      #modal-curriculo {
+        width: 100vw;
+        height: 100dvh;
+      }
+
+      .modal-curriculo__scroll {
+        padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      }
+
+      .modal-curriculo__close {
+        top: max(12px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
+        width: 44px;
+        height: 44px;
+      }
+
+      .site-footer {
+        max-height: 18dvh;
+        padding: 4px 12px max(3px, env(safe-area-inset-bottom));
+      }
+
+      .site-footer__columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px 12px;
+      }
+
+      .site-footer__intro {
+        grid-column: 1 / -1;
+      }
+
+      .site-footer__title {
+        margin-bottom: 2px;
+        font-size: 0.82rem;
+      }
+
+      .site-footer__description {
+        display: none;
+      }
+
+      .site-footer__links {
+        gap: 2px 8px;
+      }
+
+      .site-footer__link {
+        font-size: 0.72rem;
+        line-height: 1.35;
+      }
+
+      .site-footer__copyright {
+        margin-top: 3px;
+        padding-top: 3px;
+        font-size: 0.62rem;
+      }
+    }
+
+    @media (max-width: 900px) and (orientation: portrait) {
+      .orientation-hint {
+        position: fixed;
+        z-index: 9997;
+        top: max(12px, env(safe-area-inset-top));
+        left: 50%;
+        display: block;
+        width: min(360px, calc(100vw - 24px));
+        margin: 0;
+        padding: 10px 14px;
+        border: 1px solid rgb(89 207 255 / 35%);
+        border-radius: 12px;
+        background: rgb(10 15 26 / 94%);
+        box-shadow: 0 8px 24px rgb(0 0 0 / 35%);
+        color: #e8f7ff;
+        font-size: 0.9rem;
+        line-height: 1.45;
+        text-align: center;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__brand" href="#scene">ANDERSON RÊGO DE OLIVEIRA</a>
+    <nav class="site-header__nav" aria-label="Navegação principal">
+      <a class="site-header__link" href="#projetos" data-open-projects>Projetos</a>
+      <a class="site-header__link" href="#destaques" data-open-start-modal>Habilidades</a>
+      <a class="site-header__link" href="#curriculo" data-open-resume>Currículo</a>
+      <a class="site-header__link" href="#contato" data-open-contact>Contato</a>
+    </nav>
+  </header>
+
+  <main class="quarto-container" id="scene" aria-labelledby="scene-title">
+    <h1 class="scene__title" id="scene-title">Explore meu quarto</h1>
+    <div class="quarto-cena">
+      <div id="hotspot-pc" class="hotspot" role="button" tabindex="0" aria-label="Abrir projetos pelo monitor principal"></div>
+      <div id="hotspot-tv" class="hotspot" role="button" tabindex="0" aria-label="Abrir portfólio pela TV"></div>
+      <canvas id="gif-cachorro" aria-hidden="true"></canvas>
+      <div id="hotspot-celular" class="hotspot" role="button" tabindex="0" aria-label="Abrir contato pelo celular">
+        <img id="gif-celular" src="Imagens/videos/celular.gif" alt="" draggable="false" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+      <div id="hotspot-monitor2" class="hotspot" role="button" tabindex="0" aria-label="Abrir portfólio pelo segundo monitor"></div>
+      <img src="Imagens/videos/video_monitor1.gif" id="gif-monitor" alt="">
+      <img src="Imagens/videos/tv.gif" id="gif-tv" alt="">
+      <img src="Imagens/videos/monitor2.gif" id="gif-monitor2" alt="">
+      <img src="Imagens/videos/fone.gif.gif" id="gif-fone" alt="" loading="eager">
+    </div>
+  </main>
+  <p class="orientation-hint" role="status">Gire o celular na horizontal para explorar melhor o quarto.</p>
+
+  <footer class="site-footer" tabindex="0" aria-label="Rodapé">
+    <div class="site-footer__columns">
+      <div class="site-footer__intro">
+        <h2 class="site-footer__title site-footer__brand">Anderson Rêgo de Oliveira</h2>
+        <p class="site-footer__description">Transformando dados em decisões.</p>
+      </div>
+      <nav aria-labelledby="footer-links-title">
+        <h2 class="site-footer__title" id="footer-links-title">Links rápidos</h2>
+        <ul class="site-footer__links">
+          <li><a class="site-footer__link" href="#inicio" data-open-start-modal>Home</a></li>
+          <li><a class="site-footer__link" href="#projetos" data-open-projects>Projetos</a></li>
+          <li><a class="site-footer__link" href="#destaques" data-open-start-modal>Habilidades</a></li>
+          <li><a class="site-footer__link" href="#curriculo" data-open-resume>Currículo</a></li>
+          <li><a class="site-footer__link" href="#contato" data-open-contact>Contato</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2 class="site-footer__title">Contato e redes</h2>
+        <ul class="site-footer__links">
+          <li><a class="site-footer__link" href="mailto:anderson_rdo@hotmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>anderson_rdo@hotmail.com</a></li>
+          <li><a class="site-footer__link" href="https://wa.me/5521979388819?text=Ol%C3%A1%2C%20Anderson!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20uma%20oportunidade." target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>WhatsApp</a></li>
+          <li><a class="site-footer__link" href="https://www.linkedin.com/in/andersonrdo/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn</a></li>
+          <li><a class="site-footer__link" href="https://github.com/anderson123451" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="site-footer__copyright">© 2026 Anderson Rêgo de Oliveira. Todos os direitos reservados.</p>
+  </footer>
+
+  <audio id="audio-teclado" src="sons/teclado.mp3.mp3" preload="auto"></audio>
+  <audio id="audio-celular" src="sons/celular.mp3" preload="auto"></audio>
+  <audio id="audio-ps1" src="sons/ps1.mp3.mp3" preload="auto"></audio>
+
+  <div id="modal-projetos" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="projetos-title" inert>
+    <button class="projetos__close" type="button" aria-label="Fechar projetos">×</button>
+    <div class="projetos__content">
+      <h2 class="projetos__title" id="projetos-title">Projetos</h2>
+      <div id="grid-projetos">
+        <article class="projetos__card" role="button" tabindex="0" onclick="abrirDetalhesProjeto('suporte')">
+          <img class="projetos__image" src="Imagens/imagens_capa/imagemSuporte.jpg" alt="">
+          <div class="projetos__body">
+            <h3 class="projetos__card-title">Sustentação de TI &amp; SQL</h3>
+            <p class="projetos__description">+10 anos resolvendo incidentes, garantindo estabilidade de sistemas e administrando bancos de dados críticos.</p>
+            <ul class="projetos__tags"><li>SQL</li><li>Operação</li></ul>
+          </div>
+        </article>
+        <article class="projetos__card" role="button" tabindex="0" onclick="abrirDetalhesProjeto('netflix')">
+          <img class="projetos__image" src="Imagens/imagens_capa/imagemNetflix.jpg" alt="">
+          <div class="projetos__body">
+            <h3 class="projetos__card-title">Análise de Dados (Netflix)</h3>
+            <p class="projetos__description">Pipeline completo de ETL com Python (Pandas) e criação de dashboard interativo no Power BI.</p>
+            <ul class="projetos__tags"><li>ETL</li><li>Power BI</li></ul>
+          </div>
+        </article>
+        <article class="projetos__card" role="button" tabindex="0" onclick="abrirDetalhesProjeto('gastronomia')">
+          <img class="projetos__image" src="Imagens/imagens_capa/ImagemGastronomia.jpg" alt="">
+          <div class="projetos__body">
+            <h3 class="projetos__card-title">Setor Gastronômico Niterói</h3>
+            <p class="projetos__description">Mapeamento do mercado de restaurantes locais, analisando densidade comercial e maturidade digital.</p>
+            <ul class="projetos__tags"><li>Insights</li><li>Geografia</li></ul>
+          </div>
+        </article>
+        <article class="projetos__card" role="button" tabindex="0" onclick="abrirDetalhesProjeto('arquitetura')">
+          <img class="projetos__image" src="Imagens/imagens_capa/imagemArquitetura.jpg" alt="">
+          <div class="projetos__body">
+            <h3 class="projetos__card-title">Canal de Arquitetura</h3>
+            <p class="projetos__description">Estudo de caso sobre eficiência de postagens em um canal do YouTube, descobrindo o melhor retorno por vídeo.</p>
+            <ul class="projetos__tags"><li>Storytelling</li><li>KPIs</li></ul>
+          </div>
+        </article>
+        <article class="projetos__card" role="button" tabindex="0" onclick="abrirDetalhesProjeto('tiktok')">
+          <img class="projetos__image" src="Imagens/imagens_capa/imagemTiktok.jpg" alt="">
+          <div class="projetos__body">
+            <h3 class="projetos__card-title">Análise de Dados (TikTok)</h3>
+            <p class="projetos__description">Análise completa de um canal, incluindo simulação de dados com Python, ETL e dashboard no Power BI.</p>
+            <ul class="projetos__tags"><li>Dashboard</li><li>Python</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-detalhes-projeto" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="detalhe-titulo" inert>
+    <button id="fechar-detalhes" class="detalhe-projeto__close" type="button" aria-label="Fechar detalhes do projeto">×</button>
+    <div class="detalhe-projeto__content" tabindex="0" aria-label="Conteúdo do projeto">
+      <h2 id="detalhe-titulo"></h2>
+      <p id="detalhe-texto"></p>
+      <div id="detalhe-imagens"></div>
+    </div>
+  </div>
+
+  <div id="modal-contato" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-contato-title" inert>
+    <div class="modal-contato__viewport">
+      <div class="modal-contato__phone">
+        <div class="modal-contato__camera" aria-hidden="true"></div>
+        <div class="modal-contato__status" aria-hidden="true">
+          <span>09:41</span>
+          <div class="modal-contato__status-icons">
+            <span class="modal-contato__signal"></span>
+            <span class="modal-contato__wifi"></span>
+            <span class="modal-contato__battery"></span>
+          </div>
+        </div>
+        <button class="modal-contato__close" type="button" aria-label="Fechar contato">×</button>
+        <h2 class="modal-contato__title" id="modal-contato-title">Vamos conversar?</h2>
+        <div class="modal-contato__links">
+          <a class="modal-contato__link modal-contato__link--whatsapp" href="https://wa.me/5521979388819?text=Ol%C3%A1%2C%20Anderson!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20uma%20oportunidade." target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>WhatsApp<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <a class="modal-contato__link modal-contato__link--linkedin" href="https://www.linkedin.com/in/andersonrdo/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <a class="modal-contato__link modal-contato__link--email" href="mailto:anderson_rdo@hotmail.com" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-envelope" aria-hidden="true"></i>E-mail<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <a class="modal-contato__link modal-contato__link--github" href="https://github.com/anderson123451" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <button class="modal-contato__link modal-contato__link--curriculo" type="button" data-open-resume><i class="fa-solid fa-file-alt" aria-hidden="true"></i>Currículo<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="janela-jogo"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="game-title"
+    aria-describedby="game-instructions"
+  >
+    <section class="game-modal__panel">
+      <button class="game-modal__close" type="button" aria-label="Fechar Jogo">×</button>
+      <header class="game-modal__header">
+        <div>
+          <h2 class="game-modal__title" id="game-title">Neon Run</h2>
+          <p class="game-modal__subtitle" id="game-instructions">
+            Salte pelas plataformas, colete as moedas e desvie dos espinhos.
+          </p>
+        </div>
+        <p class="game-modal__score" aria-live="polite">
+          Moedas <span id="game-score">0</span>/<span id="game-total">0</span>
+        </p>
+      </header>
+      <canvas
+        class="game-modal__canvas"
+        id="game-canvas"
+        width="960"
+        height="540"
+        aria-label="Jogo de plataforma. Use as setas esquerda e direita para andar e a seta para cima para pular."
+      >
+        Seu navegador não oferece suporte ao canvas.
+      </canvas>
+      <p class="game-modal__hint">← → mover · ↑ pular · Esc fechar</p>
+      <p class="game-modal__message" id="game-message" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <div
+    id="tela-curriculo"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="portfolio-title"
+    aria-hidden="true"
+    inert
+  >
+    <style>
+      #tela-curriculo {
+        --blue: #0a66c2;
+        --ink: #24292f;
+        --muted: #64727e;
+        --line: #e4e6e8;
+        --card: #fff;
+        position: fixed;
+        z-index: 20000;
+        inset: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: #f3f2ef;
+        color: var(--ink);
+        color-scheme: light;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: scale(0.06);
+        transform-origin: var(--zoom-x, 24%) var(--zoom-y, 45%);
+        transition:
+          opacity 350ms ease,
+          transform 550ms cubic-bezier(0.16, 1, 0.3, 1),
+          visibility 550ms;
+      }
+
+      #tela-curriculo.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: scale(1);
+      }
+
+      #tela-curriculo,
+      #tela-curriculo *,
+      #tela-curriculo *::before,
+      #tela-curriculo *::after {
+        box-sizing: border-box;
+      }
+
+      #tela-curriculo a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      #tela-curriculo button,
+      #tela-curriculo a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #tela-curriculo button:focus-visible,
+      #tela-curriculo a:focus-visible {
+        outline: 3px solid #78b9f4;
+        outline-offset: 3px;
+      }
+
+      #tela-curriculo .topbar {
+        position: sticky;
+        z-index: 5;
+        top: 0;
+        border-bottom: 1px solid #dedfe1;
+        background: rgb(255 255 255 / 96%);
+        backdrop-filter: blur(12px);
+      }
+
+      #tela-curriculo .topbar__inner {
+        display: flex;
+        width: min(1120px, calc(100% - 40px));
+        min-height: 64px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin: 0 auto;
+      }
+
+      #tela-curriculo .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.08rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      #tela-curriculo .brand__mark {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        background: var(--blue);
+        color: white;
+        font-family: inherit;
+        font-size: 1rem;
+        place-items: center;
+      }
+
+      #tela-curriculo .nav {
+        display: flex;
+        height: 64px;
+        align-items: stretch;
+        gap: clamp(18px, 3vw, 36px);
+      }
+
+      #tela-curriculo .nav__link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        color: #58636d;
+        font-size: 0.88rem;
+        transition: color 250ms ease;
+      }
+
+      #tela-curriculo .nav__link::after {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: var(--blue);
+        content: "";
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 250ms ease;
+      }
+
+      #tela-curriculo .nav__link:hover {
+        color: var(--blue);
+      }
+
+      #tela-curriculo .nav__link:hover::after {
+        transform: scaleX(1);
+      }
+
+      #tela-curriculo .message-link {
+        position: relative;
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        border: 1px solid #d5e5f4;
+        border-radius: 50%;
+        background: #f4f9fe;
+        color: var(--blue);
+        place-items: center;
+        animation: portfolio-message-glow 2s ease-in-out infinite;
+        transition: transform 250ms ease;
+      }
+
+      #tela-curriculo .message-link:hover {
+        transform: translateY(-2px);
+      }
+
+      #tela-curriculo .message-link svg {
+        width: 21px;
+        height: 21px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+      }
+
+      #tela-curriculo .message-link__dot {
+        position: absolute;
+        top: 1px;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border: 2px solid white;
+        border-radius: 50%;
+        background: #d94343;
+      }
+
+      #tela-curriculo .layout {
+        display: grid;
+        width: min(1120px, calc(100% - 40px));
+        grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 270px);
+        align-items: start;
+        gap: 20px;
+        margin: 28px auto 64px;
+      }
+
+      #tela-curriculo .column {
+        display: grid;
+        min-width: 0;
+        gap: 16px;
+      }
+
+      #tela-curriculo .card {
+        overflow: hidden;
+        border: 1px solid #e1e3e5;
+        border-radius: 12px;
+        background: var(--card);
+        box-shadow: 0 2px 6px rgb(22 34 46 / 4%);
+      }
+
+      #tela-curriculo .profile__cover {
+        height: 82px;
+        background:
+          radial-gradient(ellipse at 85% 20%, rgb(255 255 255 / 26%), transparent 34%),
+          linear-gradient(120deg, #123f70, #0a66c2 60%, #49a0df);
+      }
+
+      #tela-curriculo .profile__body {
+        padding: 0 18px 18px;
+      }
+
+      #tela-curriculo .profile__photo {
+        display: block;
+        width: 82px;
+        height: 82px;
+        margin-top: -42px;
+        border: 4px solid white;
+        border-radius: 50%;
+        background: #e8edf1;
+        object-fit: cover;
+      }
+
+      #tela-curriculo .profile__name {
+        margin: 12px 0 5px;
+        font-size: 1.04rem;
+        line-height: 1.35;
+      }
+
+      #tela-curriculo .profile__role {
+        margin: 0;
+        color: #56636d;
+        font-size: 0.84rem;
+        line-height: 1.5;
+      }
+
+      #tela-curriculo .profile__location {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.77rem;
+      }
+
+      #tela-curriculo .stats {
+        padding: 16px 18px;
+      }
+
+      #tela-curriculo .stats__label {
+        margin: 0 0 12px;
+        color: #56636d;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+
+      #tela-curriculo .stats__link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--blue);
+        font-size: 0.84rem;
+        font-weight: 650;
+      }
+
+      #tela-curriculo .stats__number {
+        font-size: 1.08rem;
+      }
+
+      #tela-curriculo .intro {
+        padding: 20px;
+      }
+
+      #tela-curriculo .intro__eyebrow {
+        margin: 0 0 8px;
+        color: var(--blue);
+        font-size: 0.73rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      #tela-curriculo .intro__title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.45rem, 3vw, 2rem);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+      }
+
+      #tela-curriculo .intro__copy {
+        margin: 10px 0 0;
+        color: #56636d;
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      #tela-curriculo .composer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      #tela-curriculo .composer__avatar {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      #tela-curriculo .composer__link {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+        padding: 0 16px;
+        border: 1px solid #89939b;
+        border-radius: 24px;
+        color: #58636d;
+        font-size: 0.88rem;
+        font-weight: 600;
+        transition: background-color 250ms ease, border-color 250ms ease;
+        flex: 1;
+      }
+
+      #tela-curriculo .composer__link:hover {
+        border-color: var(--blue);
+        background: #f4f9fe;
+      }
+
+      #tela-curriculo .section-heading {
+        margin: 0;
+        font-size: 1.02rem;
+        letter-spacing: -0.015em;
+      }
+
+      #tela-curriculo .post {
+        padding: 18px;
+      }
+
+      #tela-curriculo .post__author {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      #tela-curriculo .post__avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      #tela-curriculo .post__author-name {
+        margin: 0;
+        font-size: 0.88rem;
+        font-weight: 700;
+      }
+
+      #tela-curriculo .post__meta {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.74rem;
+      }
+
+      #tela-curriculo .post__copy {
+        margin: 16px 0;
+        color: #36414a;
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      #tela-curriculo .post__image {
+        display: block;
+        width: 100%;
+        max-height: 280px;
+        border-radius: 8px;
+        background: #e6ebef;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      #tela-curriculo .post__footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-top: 13px;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      #tela-curriculo .post__like {
+        display: grid;
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: white;
+        font-size: 0.72rem;
+        place-items: center;
+      }
+
+      #tela-curriculo .panel {
+        padding: 20px;
+      }
+
+      #tela-curriculo .panel__title {
+        margin: 0 0 15px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.14rem;
+        font-weight: 600;
+      }
+
+      #tela-curriculo .topic-list {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      #tela-curriculo .topic-list__item + .topic-list__item {
+        border-top: 1px solid var(--line);
+      }
+
+      #tela-curriculo .topic-list__link {
+        display: grid;
+        gap: 4px;
+        padding: 12px 0;
+      }
+
+      #tela-curriculo .topic-list__link:hover .topic-list__title {
+        color: var(--blue);
+      }
+
+      #tela-curriculo .topic-list__title {
+        font-size: 0.84rem;
+        font-weight: 650;
+        transition: color 250ms ease;
+      }
+
+      #tela-curriculo .topic-list__detail {
+        color: var(--muted);
+        font-size: 0.74rem;
+        line-height: 1.45;
+      }
+
+      #tela-curriculo .contact {
+        padding: 18px 20px;
+        background: #153b5c;
+        color: #fff;
+      }
+
+      #tela-curriculo .contact__title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      #tela-curriculo .contact__copy {
+        margin: 8px 0 14px;
+        color: #e2edf6;
+        font-size: 0.82rem;
+        line-height: 1.55;
+      }
+
+      #tela-curriculo .contact__link {
+        display: inline-flex;
+        min-height: 36px;
+        align-items: center;
+        padding: 0 14px;
+        border: 1px solid rgb(255 255 255 / 75%);
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 650;
+        transition: background-color 250ms ease, color 250ms ease;
+      }
+
+      #tela-curriculo .contact__link:hover {
+        background: white;
+        color: #153b5c;
+      }
+
+      #tela-curriculo .portfolio-close {
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        gap: 7px;
+        padding: 0 14px;
+        border: 1px solid #d5e5f4;
+        border-radius: 22px;
+        background: white;
+        color: var(--blue);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 650;
+        box-shadow: 0 2px 8px rgb(22 34 46 / 12%);
+        transition: background-color 250ms ease, transform 250ms ease;
+      }
+
+      #tela-curriculo .portfolio-close:hover {
+        background: #f4f9fe;
+        transform: translateY(-2px);
+      }
+
+      #tela-curriculo .portfolio-close span {
+        font-size: 1.15rem;
+        line-height: 1;
+      }
+
+      #tela-curriculo .feed {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      #tela-curriculo .feed > * {
+        animation: portfolio-card-arrive 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      #tela-curriculo .feed > *:nth-child(2) {
+        animation-delay: 80ms;
+      }
+
+      #tela-curriculo .feed > *:nth-child(3) {
+        animation-delay: 150ms;
+      }
+
+      #tela-curriculo .feed > *:nth-child(4) {
+        animation-delay: 220ms;
+      }
+
+      #tela-curriculo .feed > *:nth-child(5) {
+        animation-delay: 290ms;
+      }
+
+      #tela-curriculo .feed > *:nth-child(6) {
+        animation-delay: 360ms;
+      }
+
+      #tela-curriculo.is-open .feed {
+        animation: portfolio-feed-arrive 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      @keyframes portfolio-card-arrive {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 960px) {
+        #tela-curriculo .layout {
+          grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
+        }
+
+        #tela-curriculo .column--right {
+          grid-column: 1 / -1;
+          grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.8fr);
+        }
+      }
+
+      @media (max-width: 640px) {
+        #tela-curriculo .topbar__inner,
+        #tela-curriculo .layout {
+          width: min(100% - 28px, 520px);
+        }
+
+        #tela-curriculo .topbar__inner {
+          min-height: 58px;
+          gap: 12px;
+        }
+
+        #tela-curriculo .brand {
+          font-size: 0.93rem;
+        }
+
+        #tela-curriculo .brand__mark {
+          width: 30px;
+          height: 30px;
+        }
+
+        #tela-curriculo .portfolio-close {
+          width: 40px;
+          justify-content: center;
+          padding: 0;
+        }
+
+        #tela-curriculo .portfolio-close__label {
+          display: none;
+        }
+
+        #tela-curriculo .nav {
+          display: none;
+        }
+
+        #tela-curriculo .layout {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 14px;
+          margin-top: 16px;
+        }
+
+        #tela-curriculo .column {
+          gap: 14px;
+        }
+
+        #tela-curriculo .column--left,
+        #tela-curriculo .column--right {
+          grid-column: auto;
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        #tela-curriculo .intro {
+          padding: 17px;
+        }
+
+        #tela-curriculo .post {
+          padding: 15px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #tela-curriculo *,
+        #tela-curriculo *::before,
+        #tela-curriculo *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @keyframes portfolio-message-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 0 rgb(10 102 194 / 0%);
+        }
+
+        50% {
+          box-shadow: 0 0 15px rgb(10 102 194 / 48%);
+        }
+      }
+
+      @keyframes portfolio-feed-arrive {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="#sobre" aria-label="Anderson Rêgo de Oliveira, início">
+          <span class="brand__mark" aria-hidden="true">A</span>
+          Anderson Rêgo
+        </a>
+        <nav class="nav" aria-label="Navegação do portfólio">
+          <a class="nav__link" href="#sobre">Sobre</a>
+          <a class="nav__link" href="#publicacoes">Projetos</a>
+          <a class="nav__link" href="#destaques">Destaques</a>
+        </nav>
+        <a class="message-link" href="#contato" aria-label="Ir para contato">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5 8 8 0 0 1-3.6-.85L4 20l1.35-4.1A7.5 7.5 0 1 1 20 11.5Z" />
+            <path d="M8.5 11.5h.01M12.5 11.5h.01M16.5 11.5h.01" />
+          </svg>
+          <span class="message-link__dot" aria-hidden="true"></span>
+        </a>
+        <button class="portfolio-close" type="button" aria-label="Fechar portfólio e voltar ao quarto">
+          <span aria-hidden="true">×</span>
+          <span class="portfolio-close__label">Voltar ao quarto</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="column column--left" aria-label="Perfil">
+        <section class="card profile">
+          <div class="profile__cover" aria-hidden="true"></div>
+          <div class="profile__body">
+            <img
+              class="profile__photo"
+              src="Imagens/foto_perfil/foto_perfil.jpg"
+              alt="Foto de perfil de Anderson Rêgo de Oliveira"
+            >
+            <h1 class="profile__name">Anderson Rêgo de Oliveira</h1>
+            <p class="profile__role">Analista de Dados | Power BI | SQL</p>
+            <p class="profile__location">Dados que ajudam a decidir melhor.</p>
+          </div>
+        </section>
+
+        <section class="card stats" aria-label="Estatísticas do portfólio">
+          <p class="stats__label">Visualizações do perfil</p>
+          <a class="stats__link" href="#publicacoes">
+            <span>Projetos para explorar</span>
+            <span class="stats__number">03</span>
+          </a>
+        </section>
+      </aside>
+
+      <section class="column feed" aria-label="Portfólio e publicações">
+        <section class="card intro" id="sobre">
+          <p class="intro__eyebrow">Portfólio profissional</p>
+          <h2 class="intro__title" id="portfolio-title">Transformo dados em histórias claras.</h2>
+          <p class="intro__copy">
+            Exploro análise de dados, visualização e soluções em Power BI e SQL
+            para tornar informações complexas mais úteis no dia a dia.
+          </p>
+        </section>
+
+        <section class="card composer" aria-label="Atalho para os projetos">
+          <img
+            class="composer__avatar"
+            src="Imagens/foto_perfil/foto_perfil.jpg"
+            alt=""
+            aria-hidden="true"
+          >
+          <a class="composer__link" href="#publicacoes">Conheça os projetos</a>
+        </section>
+
+        <h2 class="section-heading" id="publicacoes">Projetos em destaque</h2>
+
+        <article class="card post">
+          <div class="post__author">
+            <img class="post__avatar" src="Imagens/foto_perfil/foto_perfil.jpg" alt="">
+            <div>
+              <h3 class="post__author-name">Análise de dados do TikTok</h3>
+              <p class="post__meta">Projeto de análise e visualização</p>
+            </div>
+          </div>
+          <p class="post__copy">
+            Uma exploração de dados para encontrar padrões e apresentar os
+            principais indicadores de forma visual e acessível.
+          </p>
+          <img
+            class="post__image"
+            src="Imagens/imagens_capa/imagemTiktok.jpg"
+            alt="Capa do projeto de análise de dados do TikTok"
+            loading="lazy"
+          >
+          <div class="post__footer">
+            <span class="post__like" aria-hidden="true">+</span>
+            <span>Visualização de dados · Power BI</span>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="post__author">
+            <img class="post__avatar" src="Imagens/foto_perfil/foto_perfil.jpg" alt="">
+            <div>
+              <h3 class="post__author-name">Indicadores do setor gastronômico</h3>
+              <p class="post__meta">Projeto de análise de negócio</p>
+            </div>
+          </div>
+          <p class="post__copy">
+            Um painel para organizar métricas do setor e facilitar a leitura de
+            tendências, resultados e oportunidades.
+          </p>
+          <img
+            class="post__image"
+            src="Imagens/imagens_capa/ImagemGastronomia.jpg"
+            alt="Capa do projeto de análise do setor gastronômico"
+            loading="lazy"
+          >
+          <div class="post__footer">
+            <span class="post__like" aria-hidden="true">+</span>
+            <span>Análise de negócio · Dados</span>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="post__author">
+            <img class="post__avatar" src="Imagens/foto_perfil/foto_perfil.jpg" alt="">
+            <div>
+              <h3 class="post__author-name">Exploração de dados de entretenimento</h3>
+              <p class="post__meta">Projeto de análise exploratória</p>
+            </div>
+          </div>
+          <p class="post__copy">
+            Visualização de informações de catálogo para destacar categorias,
+            distribuição e padrões de conteúdo.
+          </p>
+          <img
+            class="post__image"
+            src="Imagens/imagens_capa/imagemNetflix.jpg"
+            alt="Capa do projeto de análise de dados de entretenimento"
+            loading="lazy"
+          >
+          <div class="post__footer">
+            <span class="post__like" aria-hidden="true">+</span>
+            <span>SQL · Storytelling com dados</span>
+          </div>
+        </article>
+      </section>
+
+      <aside class="column column--right" aria-label="Destaques e contato">
+        <section class="card panel" id="destaques">
+          <h2 class="panel__title">Assuntos em destaque</h2>
+          <ul class="topic-list">
+            <li class="topic-list__item">
+              <a class="topic-list__link" href="#publicacoes">
+                <span class="topic-list__title">Visualização de dados</span>
+                <span class="topic-list__detail">Apresentar indicadores com clareza</span>
+              </a>
+            </li>
+            <li class="topic-list__item">
+              <a class="topic-list__link" href="#publicacoes">
+                <span class="topic-list__title">Business Intelligence</span>
+                <span class="topic-list__detail">Dashboards para apoiar decisões</span>
+              </a>
+            </li>
+            <li class="topic-list__item">
+              <a class="topic-list__link" href="#publicacoes">
+                <span class="topic-list__title">SQL e análise</span>
+                <span class="topic-list__detail">Investigar dados e encontrar padrões</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="card contact" id="contato">
+          <h2 class="contact__title">Vamos conversar?</h2>
+          <p class="contact__copy">Conheça os projetos e as áreas de atuação.</p>
+          <a class="contact__link" href="#publicacoes">Ver projetos</a>
+        </section>
+      </aside>
+    </main>
+
+  </div>
+
+  <div
+    id="modal-inicio"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="modal-inicio-title"
+    inert
+  >
+    <button class="modal-inicio__close" type="button" aria-label="Fechar portfólio">×</button>
+    <div class="modal-inicio__scroll">
+      <div class="modal-inicio__content">
+        <header class="modal-inicio__hero">
+          <p class="modal-inicio__eyebrow">Analista de Dados • Power BI • SQL</p>
+          <h1 class="modal-inicio__title" id="modal-inicio-title">
+            Transformo dados em decisões que geram valor.
+          </h1>
+          <ul class="modal-inicio__tags" aria-label="Áreas de experiência">
+            <li class="modal-inicio__tag">+10 anos em TI</li>
+            <li class="modal-inicio__tag">Power BI</li>
+            <li class="modal-inicio__tag">SQL · Python</li>
+          </ul>
+        </header>
+
+        <section class="modal-inicio__section" aria-labelledby="modal-inicio-about-title">
+          <div class="modal-inicio__about-heading">
+            <img
+              src="Imagens/foto_perfil/foto_perfil.jpg"
+              class="foto-modal"
+              alt="Anderson Rêgo"
+            >
+            <h2 class="modal-inicio__section-title" id="modal-inicio-about-title">Sobre Mim</h2>
+          </div>
+          <p class="modal-inicio__summary">
+            Com mais de 10 anos de experiência na área de TI, construí uma sólida trajetória em
+            suporte e sustentação de sistemas, administração de bancos de dados e resolução de
+            problemas. Atualmente, direciono minha experiência para a área de Dados, desenvolvendo
+            habilidades em SQL e Power BI para criar dashboards, indicadores e análises que
+            transformam informações em insights e apoiam a tomada de decisões.
+          </p>
+          <div class="modal-inicio__about">
+            <article class="modal-inicio__card">
+              <h3 class="modal-inicio__card-title">💼 Do suporte à estratégia</h3>
+              <p class="modal-inicio__card-copy">
+                Minha trajetória começou no suporte e na sustentação de TI. Essa experiência me
+                ensinou a entender a operação, investigar causas e conectar necessidades técnicas
+                aos objetivos do negócio.
+              </p>
+            </article>
+            <article class="modal-inicio__card">
+              <h3 class="modal-inicio__card-title">📊 Dados como linguagem de decisão</h3>
+              <p class="modal-inicio__card-copy">
+                Uso dados para revelar padrões, acompanhar indicadores e comunicar o que importa.
+                Com SQL e Power BI, transformo informações em análises claras que apoiam decisões.
+              </p>
+            </article>
+            <article class="modal-inicio__card">
+              <h3 class="modal-inicio__card-title">🎯 Meu diferencial</h3>
+              <p class="modal-inicio__card-copy">
+                Combino experiência prática em TI, pensamento analítico e comunicação simples:
+                do entendimento do problema à apresentação de caminhos objetivos.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="modal-inicio__section" aria-labelledby="modal-inicio-stats-title">
+          <h2 class="modal-inicio__section-title" id="modal-inicio-stats-title">Experiência e atuação</h2>
+          <div class="modal-inicio__stats">
+            <article class="modal-inicio__card">
+              <strong class="modal-inicio__stat-value">10+</strong>
+              <span class="modal-inicio__stat-label">Anos de Experiência</span>
+            </article>
+            <article class="modal-inicio__card">
+              <strong class="modal-inicio__stat-value">SQL</strong>
+              <span class="modal-inicio__stat-label">Bancos de Dados</span>
+            </article>
+            <article class="modal-inicio__card">
+              <strong class="modal-inicio__stat-value">BI</strong>
+              <span class="modal-inicio__stat-label">Power BI &amp; Analytics</span>
+            </article>
+            <article class="modal-inicio__card">
+              <strong class="modal-inicio__stat-value">N2</strong>
+              <span class="modal-inicio__stat-label">Sustentação de TI</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="modal-inicio__section" aria-labelledby="modal-inicio-skills-title">
+          <h2 class="modal-inicio__section-title" id="modal-inicio-skills-title">Habilidades Técnicas</h2>
+          <ul class="modal-inicio__skills">
+            <li class="modal-inicio__skill">Suporte e Sustentação de TI</li>
+            <li class="modal-inicio__skill">SQL Server</li>
+            <li class="modal-inicio__skill">Power BI</li>
+            <li class="modal-inicio__skill">DAX &amp; Power Query</li>
+            <li class="modal-inicio__skill">Modelagem de Dados</li>
+            <li class="modal-inicio__skill">Análise de Dados</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="modal-curriculo"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="modal-curriculo-title"
+    inert
+  >
+    <button class="modal-curriculo__close" type="button" aria-label="Fechar currículo">×</button>
+    <div class="modal-curriculo__scroll">
+      <div class="modal-curriculo__content">
+        <header>
+          <h1 class="modal-curriculo__title" id="modal-curriculo-title">ANDERSON RÊGO DE OLIVEIRA</h1>
+          <p class="modal-curriculo__role">
+            Analista de Dados | Power BI | SQL | Python | Business Intelligence
+          </p>
+          <p class="modal-curriculo__contacts">
+            <span>Niterói - RJ</span>
+            <a href="tel:+5521979388819">(21) 97938-8819</a>
+            <a href="mailto:anderson_rdo@hotmail.com">anderson_rdo@hotmail.com</a>
+          </p>
+          <a
+            class="modal-curriculo__download"
+            href="https://drive.google.com/uc?export=download&amp;id=15uO4079u1ArXHdgCTy6jxTSyw0wliKfA"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Baixar Currículo em PDF</a>
+        </header>
+
+        <section class="modal-curriculo__section" aria-labelledby="curriculo-resumo-title">
+          <h2 id="curriculo-resumo-title">Resumo Profissional</h2>
+          <p>
+            Analista de Dados com mais de 10 anos de experiência em Tecnologia da Informação,
+            com sólida atuação em sustentação de sistemas críticos e administração de bancos de
+            dados SQL Server. Especialista em Power BI para criação de dashboards, relatórios
+            interativos e modelagem de dados, com certificação concluída pela Udemy. Experiência
+            em análise de dados, ETL, transformação e visualização de dados para suporte à tomada
+            de decisão data-driven. Domínio de SQL avançado, Python (Pandas, NumPy) e fundamentos
+            de Machine Learning.
+          </p>
+        </section>
+
+        <section class="modal-curriculo__section" aria-labelledby="curriculo-experiencia-title">
+          <h2 id="curriculo-experiencia-title">Experiência Profissional</h2>
+          <h3 class="modal-curriculo__experience-title">
+            Soma Tecnologia — Analista / Assistente Técnico (2013 – 2025)
+          </h3>
+          <ul class="modal-curriculo__list">
+            <li>Sustentação de sistemas corporativos em ambiente produtivo de alta disponibilidade.</li>
+            <li>Administração e manutenção de bancos de dados SQL Server: queries, stored procedures e análise de dados.</li>
+            <li>Análise e resolução de incidentes técnicos (troubleshooting), com foco em disponibilidade e performance.</li>
+            <li>Validação, extração e análise de dados via SQL para suporte à tomada de decisão.</li>
+            <li>Monitoramento de serviços e garantia de SLA em ambientes produtivos.</li>
+          </ul>
+        </section>
+
+        <div class="modal-curriculo__section modal-curriculo__details">
+          <section class="modal-curriculo__detail" aria-labelledby="curriculo-formacao-title">
+            <h2 id="curriculo-formacao-title">Formação</h2>
+            <p>Bacharelado em Sistemas de Informação — Estácio (2021)</p>
+          </section>
+          <section class="modal-curriculo__detail" aria-labelledby="curriculo-certificacoes-title">
+            <h2 id="curriculo-certificacoes-title">Certificações</h2>
+            <ul class="modal-curriculo__list">
+              <li>Power BI (Udemy)</li>
+              <li>Machine Learning (Kaggle)</li>
+            </ul>
+          </section>
+        </div>
+
+        <section class="modal-curriculo__section" aria-labelledby="curriculo-habilidades-title">
+          <h2 id="curriculo-habilidades-title">Habilidades Técnicas</h2>
+          <ul class="modal-curriculo__skills">
+            <li class="modal-curriculo__skill-group">
+              <h3>Power BI</h3>
+              <p>Dashboards, relatórios interativos, modelagem de dados, DAX e Power Query.</p>
+            </li>
+            <li class="modal-curriculo__skill-group">
+              <h3>SQL Server</h3>
+              <p>Consultas complexas, JOIN, subqueries e procedures.</p>
+            </li>
+            <li class="modal-curriculo__skill-group">
+              <h3>Python</h3>
+              <p>Pandas, NumPy, Matplotlib e Seaborn.</p>
+            </li>
+            <li class="modal-curriculo__skill-group">
+              <h3>Outros</h3>
+              <p>Excel avançado, Git e IA generativa (ChatGPT, Gemini, Grok).</p>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const monitorHotspot = document.querySelector("#hotspot-monitor2");
+      const portfolioScreen = document.querySelector("#tela-curriculo");
+      const portfolioCloseButton = portfolioScreen.querySelector(".portfolio-close");
+      const startModal = document.querySelector("#modal-inicio");
+      const startModalCloseButton = startModal.querySelector(".modal-inicio__close");
+      const roomScene = document.querySelector("#scene");
+      const siteHeader = document.querySelector(".site-header");
+      const siteFooter = document.querySelector(".site-footer");
+      const pcHotspot = document.querySelector("#hotspot-pc");
+      const tvHotspot = document.querySelector("#hotspot-tv");
+      const projectsModal = document.querySelector("#modal-projetos");
+      const projectsCloseButton = projectsModal.querySelector(".projetos__close");
+      const detailsModal = document.querySelector("#modal-detalhes-projeto");
+      const detailsCloseButton = document.querySelector("#fechar-detalhes");
+      const detailsContent = detailsModal.querySelector(".detalhe-projeto__content");
+      const projectCards = [...projectsModal.querySelectorAll(".projetos__card")];
+      const dadosProjetos = {
+        suporte: {
+          titulo: "Sustentação de TI & SQL",
+          texto: `Com mais de 10 anos de experiência na área de Tecnologia da Informação, construí uma carreira sólida não apenas resolvendo problemas técnicos, mas garantindo que a tecnologia fosse uma aliada estratégica para o negócio.
+
+🛠️ O que eu fazia (Atividades Técnicas)
+- Suporte e Sustentação (N1 e N2): Atendimento a usuários, investigação de incidentes complexos em sistemas corporativos e resolução de problemas em ambiente de produção.
+- Administração de Banco de Dados (SQL Server): Criação de consultas SQL para extração de dados estratégicos, análise de integridade e suporte a sistemas críticos.
+- Análise de Causa Raiz (RCA): Investigação profunda de erros recorrentes para evitar que o mesmo problema voltasse a acontecer.
+- Gestão de SLAs: Atendimento focado em prazos e na comunicação clara com o usuário final.
+
+📈 Como isso ajudava a empresa (Impacto no Negócio)
+- Redução de Downtime (Paradas): Ao resolver incidentes rapidamente e investigar a causa raiz, eu evitava que a empresa perdesse produtividade e dinheiro com sistemas fora do ar.
+- Tomada de Decisão Rápida: Minhas consultas em SQL Server permitiam que gestores tivessem acesso rápido a relatórios e dados, ajudando na tomada de decisões diárias.
+- Estabilidade dos Sistemas: A sustentação proativa garantia que as aplicações que geravam receita ou atendiam clientes continuassem funcionando perfeitamente.
+- Foco no Usuário: O suporte empático e eficiente reduzia a frustração das equipes, permitindo que eles focassem no que realmente importa: o core business da empresa.
+
+🚀 A Ponte para Dados
+Essa vivência técnica é o alicerce da minha transição para Dados. Quem passa 10 anos resolvendo problemas reais de negócio, olhando para bancos de dados e ouvindo as dores dos usuários, não cria dashboards apenas com números bonitos. Cria soluções que realmente respondem às necessidades da empresa, unindo a visão técnica à visão de negócio.`,
+          imagens: [],
+        },
+        netflix: {
+          titulo: "Análise de Dados (Netflix)",
+          texto: `🚀 Meu primeiro projeto completo de ETL + BI!
+
+⚠️ Importante: Os dados utilizados foram GERADOS POR INTELIGÊNCIA ARTIFICIAL exclusivamente para fins de estudo e prática. Não se tratam de dados reais da Netflix.
+
+🐍 ETAPA 1 - PYTHON (PANDAS)
+Nesta etapa, realizei todo o processo de limpeza e transformação dos dados:
+- ✅ Carregamento e exploração inicial dos dados
+- ✅ Identificação de valores negativos (-999, -10.0)
+- ✅ Substituição de valores negativos por NaN (nulos)
+- ✅ Tratamento de placeholders numéricos (99.99, 3.2878...)
+- ✅ Correção de categorias inválidas ("Desconhecido", "Unknown")
+- ✅ Padronização de nomes de países ("Reino Unido" → "UK")
+- ✅ Substituição de valores nulos pela MÉDIA das respectivas colunas
+- ✅ Exportação dos dados limpos para um novo arquivo CSV
+
+📊 ETAPA 2 - POWER BI
+Com os dados já tratados, parti para a visualização:
+- ✅ Conexão com o arquivo CSV limpo
+- ✅ Criação de matriz de gasto mensal por país
+- ✅ Formatação e padronização dos visuais
+- ✅ Criação de métricas e indicadores
+- ✅ Desenvolvimento do dashboard interativo
+
+📈 RESULTADO DO ESTUDO
+Os dados simulados apontaram os seguintes mercados como maiores em receita:
+- 🥇 USA: R$ 289.849,90
+- 🥈 Brasil: R$ 163.936,40
+- 🥉 França: R$ 119.327,90
+Receita total simulada: R$ 1.204.364,20
+
+🎓 APRENDIZAGENS
+Este primeiro projeto me ensinou:
+- 🔹 A importância da limpeza de dados antes da análise
+- 🔹 Como identificar e tratar valores inconsistentes
+- 🔹 ETL completo utilizando Python (Pandas)
+- 🔹 Criação de visualizações profissionais com Power BI
+- 🔹 Storytelling com dados para tomada de decisão`,
+          imagens: ["Imagens/Netflix/foto1.jfif"],
+        },
+        gastronomia: {
+          titulo: "Setor Gastronômico Niterói",
+          texto: `📊 Transformando Dados em Insights: Análise do Setor Gastronômico de Niterói
+
+Recentemente, decidi aplicar meus estudos de Power BI em um cenário real e local: mapear o mercado de restaurantes e lanchonetes em Niterói/RJ. O objetivo foi entender a densidade comercial por bairro e o nível de maturidade digital desses negócios.
+
+Neste projeto, trabalhei as seguintes etapas:
+- ETL (Power Query): Limpeza e tratamento dos dados para padronizar nomes de bairros e categorias de estabelecimentos.
+- Modelagem: Criação de colunas condicionais e medidas para identificar a conectividade via WhatsApp.
+- Data Viz: Construção de dashboards focados em facilitar a leitura geográfica e o perfil do setor.
+
+🔎 Principais Insights:
+- Concentração: O eixo Icaraí-Centro concentra quase 50% do mercado gastronômico mapeado.
+- Oportunidade Digital: Notei que metade dos estabelecimentos ainda não utiliza (ou não informa) o WhatsApp, o que indica um enorme campo para serviços de tecnologia e automação de atendimento.
+
+Estou em transição de carreira para Análise de Dados, unindo minha experiência de mais de 10 anos em infraestrutura e SQL com novas ferramentas de Business Intelligence. Cada projeto é um passo importante nessa jornada de aprendizado contínuo.
+
+O que acharam da visualização? Aceito feedbacks e sugestões para os próximos dashboards! 🚀`,
+          imagens: ["Imagens/Setor_Gastronomico/foto1.jfif", "Imagens/Setor_Gastronomico/foto2.jfif", "Imagens/Setor_Gastronomico/foto3.jfif", "Imagens/Setor_Gastronomico/foto4.jfif", "Imagens/Setor_Gastronomico/foto5.jfif"],
+        },
+        arquitetura: {
+          titulo: "Canal de Arquitetura",
+          texto: `📈 Análise de Desempenho: Canal de Arquitetura
+
+Estudando análise de dados, resolvi aplicar o que venho aprendendo em um caso real: um amigo que cuida da postagem de vídeos de um canal de arquitetura me pediu ajuda para entender o desempenho do último ano — ele estava se preparando para pedir um aumento.
+
+Os dados que recebi eram simples: uma planilha com visualizações, curtidas, comentários e compartilhamentos, dia a dia, ao longo de 12 meses.
+
+O primeiro passo foi só organizar isso: somar tudo mês a mês. Só com esse agrupamento, já deu pra ver a evolução ao longo do ano — inclusive um mês que viralizou bem acima da média.
+
+Mas ao olhar só o total de views por mês, a conclusão parecia ruim: os últimos meses tinham views bem mais baixas que o pico. Ia parecer que o canal estava perdendo força.
+
+Foi aí que fiz uma pergunta simples: "e se esses meses tiveram menos vídeos postados?" Pedi essa informação e cruzei com o que já tinha. O resultado mudou completamente: dividindo views pelo número de vídeos postados, os meses "fracos" na verdade tinham a MELHOR eficiência por vídeo do ano — o canal estava postando menos, mas cada vídeo individual estava performando cada vez melhor.
+
+Nenhum comando avançado, nenhum modelo. Só soma, divisão e uma pergunta certa na hora certa.
+
+O que eu aprendi com esse caso, ainda no início dos meus estudos: análise de dados não é sobre usar o comando mais complexo ou montar o gráfico com mais informação possível. É sobre responder a pergunta que realmente importa — e às vezes o básico, bem aplicado, já resolve.
+
+Deixo a pergunta pra vocês que já trabalham com dados: vocês já viveram uma situação parecida, em que um dado simples (ou uma pergunta simples) mudou completamente a conclusão de uma análise?`,
+          imagens: ["Imagens/graficos _arquitetura/foto1.jpg", "Imagens/graficos _arquitetura/foto2.jpg", "Imagens/graficos _arquitetura/foto3.jpg", "Imagens/graficos _arquitetura/foto4.jpg"],
+        },
+        tiktok: {
+          titulo: "Análise de Dados (TikTok)",
+          texto: `📱 Análise de Dados de um Canal do TikTok
+
+🚀 Concluí mais um projeto de estudo: uma análise completa de dados de um canal do TikTok!
+
+Ainda estou no início dos meus estudos na área de dados, e este projeto foi um grande desafio para mim. Depois do projeto da Netflix, queria praticar algo mais completo, que incluísse desde a geração dos dados até o dashboard.
+
+O que mais aprendi? Que a limpeza e preparação dos dados (ETL) é a parte mais trabalhosa, mas também a mais importante. Foi onde mais errei e mais aprendi.
+
+🎯 O que eu fiz (como estudante):
+- Simulei Dados com Python 🐍: Criei 3 tabelas (Canal, Vídeos, Comentários) com valores faltantes e inconsistências de propósito, para treinar como resolver problemas reais.
+- ETL na Prática 🧹: Tratei valores vazios (descrições, localização, centenas de comentários), padronizei datas e horários e renomeei colunas para português.
+- Dashboard no Power BI 📊: Criei relacionamento entre as tabelas, medidas em DAX (aprendendo ainda!) e visuais interativos.
+
+🔍 O que os dados me mostraram:
+- Melhor dia para postar: Sábado (3,2 milhões de views)
+- Melhor horário: 18h - 21h
+- Vídeo mais visto: Vídeo 55 (3,2 milhões de views)
+- Taxa de engajamento: ~31%
+
+💡 O que eu concluo com isso: postar aos Sábados entre 18h e 21h parece ser a melhor estratégia (pelos dados que gerei para estudar).
+
+📚 O que tem no meu GitHub:
+- Código Python (notebooks)
+- Dados brutos e tratados
+- Arquivo .pbix do Power BI
+- README com toda a documentação
+
+Ainda tenho muito o que aprender, principalmente em DAX e criação de medidas mais complexas. Mas estou feliz com a minha evolução e com o que consegui entregar neste projeto.
+
+Feedbacks são muito bem-vindos! Estou aqui para aprender. 🙌`,
+          imagens: ["Imagens/tiktok_analise/imagem1.jpg", "Imagens/tiktok_analise/imagem2.jpg"],
+        },
+      };
+      const gameModal = document.querySelector("#janela-jogo");
+      const gamePanel = gameModal.querySelector(".game-modal__panel");
+      const gameCloseButton = gameModal.querySelector(".game-modal__close");
+      const gameCanvas = document.querySelector("#game-canvas");
+      const resumeModal = document.querySelector("#modal-curriculo");
+      const resumeCloseButton = resumeModal.querySelector(".modal-curriculo__close");
+      const contactModal = document.querySelector("#modal-contato");
+      const contactCloseButton = contactModal.querySelector(".modal-contato__close");
+      const gameContext = gameCanvas.getContext("2d");
+      const gameScore = document.querySelector("#game-score");
+      const gameTotal = document.querySelector("#game-total");
+      const gameMessage = document.querySelector("#game-message");
+      const celularHotspot = document.querySelector("#hotspot-celular");
+      const dogCanvas = document.querySelector("#gif-cachorro");
+      const keyboardAudio = document.querySelector("#audio-teclado");
+      const celularAudio = document.querySelector("#audio-celular");
+      const ps1Audio = document.querySelector("#audio-ps1");
+      const modalTriggers = {
+        contato: celularHotspot,
+        curriculo: siteFooter.querySelector("[data-open-resume]"),
+        portfolio: monitorHotspot,
+        projetos: pcHotspot,
+        jogo: tvHotspot,
+        inicio: monitorHotspot,
+      };
+      keyboardAudio.volume = 0.5;
+      ps1Audio.volume = 0.5;
+      let returnFocusElement = monitorHotspot;
+      let audioInteraction = false;
+      let startModalHideTimeout = null;
+      let activeModal = null;
+      let detailsTrigger = null;
+      const gameWidth = 960;
+      const gameHeight = 540;
+      const gameKeys = new Set();
+      const platforms = [
+        { x: 0, y: 500, width: gameWidth, height: 40 },
+        { x: 130, y: 415, width: 160, height: 18 },
+        { x: 350, y: 340, width: 150, height: 18 },
+        { x: 570, y: 270, width: 145, height: 18 },
+        { x: 770, y: 390, width: 150, height: 18 },
+      ];
+      const coins = [
+        { x: 205, y: 378, radius: 12, collected: false },
+        { x: 425, y: 303, radius: 12, collected: false },
+        { x: 642, y: 232, radius: 12, collected: false },
+        { x: 820, y: 354, radius: 12, collected: false },
+      ];
+      const spikes = [
+        { x: 305, y: 500, width: 32, height: 24 },
+        { x: 520, y: 500, width: 32, height: 24 },
+        { x: 730, y: 500, width: 32, height: 24 },
+        { x: 448, y: 340, width: 28, height: 22 },
+      ];
+      const player = { x: 54, y: 466, width: 30, height: 34, velocityX: 0, velocityY: 0, onGround: true };
+      let collectedCoins = 0;
+      let gameRunning = false;
+      let gameFrame = null;
+      let previousFrameTime = 0;
+
+      if (!gameContext) {
+        console.error("Não foi possível iniciar o jogo: o navegador não oferece suporte ao canvas 2D.");
+      }
+
+      gameTotal.textContent = String(coins.length);
+
+      function drawGame() {
+        if (!gameContext) {
+          return;
+        }
+
+        gameContext.clearRect(0, 0, gameWidth, gameHeight);
+        gameContext.fillStyle = "#070a13";
+        gameContext.fillRect(0, 0, gameWidth, gameHeight);
+
+        gameContext.strokeStyle = "rgb(112 95 255 / 10%)";
+        gameContext.lineWidth = 1;
+        for (let x = 0; x <= gameWidth; x += 48) {
+          gameContext.beginPath();
+          gameContext.moveTo(x, 0);
+          gameContext.lineTo(x, gameHeight);
+          gameContext.stroke();
+        }
+        for (let y = 0; y <= gameHeight; y += 48) {
+          gameContext.beginPath();
+          gameContext.moveTo(0, y);
+          gameContext.lineTo(gameWidth, y);
+          gameContext.stroke();
+        }
+
+        platforms.forEach((platform) => {
+          gameContext.fillStyle = platform.y === 500 ? "#172347" : "#254bc7";
+          gameContext.shadowColor = "#477cff";
+          gameContext.shadowBlur = 14;
+          gameContext.fillRect(platform.x, platform.y, platform.width, platform.height);
+          gameContext.shadowBlur = 0;
+          gameContext.fillStyle = "#55d9ff";
+          gameContext.fillRect(platform.x, platform.y, platform.width, 3);
+        });
+
+        coins.forEach((coin) => {
+          if (coin.collected) {
+            return;
+          }
+
+          gameContext.beginPath();
+          gameContext.arc(coin.x, coin.y, coin.radius, 0, Math.PI * 2);
+          gameContext.fillStyle = "#ffd23f";
+          gameContext.shadowColor = "#ffb800";
+          gameContext.shadowBlur = 18;
+          gameContext.fill();
+          gameContext.shadowBlur = 0;
+          gameContext.beginPath();
+          gameContext.arc(coin.x - 3, coin.y - 3, 3, 0, Math.PI * 2);
+          gameContext.fillStyle = "#fff4b0";
+          gameContext.fill();
+        });
+
+        spikes.forEach((spike) => {
+          gameContext.beginPath();
+          gameContext.moveTo(spike.x, spike.y);
+          gameContext.lineTo(spike.x + spike.width / 2, spike.y - spike.height);
+          gameContext.lineTo(spike.x + spike.width, spike.y);
+          gameContext.closePath();
+          gameContext.fillStyle = "#ff3b67";
+          gameContext.shadowColor = "#ff245b";
+          gameContext.shadowBlur = 14;
+          gameContext.fill();
+          gameContext.shadowBlur = 0;
+        });
+
+        gameContext.fillStyle = "#8bff4a";
+        gameContext.shadowColor = "#75ff2b";
+        gameContext.shadowBlur = 22;
+        gameContext.fillRect(player.x, player.y, player.width, player.height);
+        gameContext.shadowBlur = 0;
+        gameContext.fillStyle = "#142a19";
+        gameContext.fillRect(player.x + 7, player.y + 9, 5, 5);
+        gameContext.fillRect(player.x + 19, player.y + 9, 5, 5);
+      }
+
+      function resetPlayer(message) {
+        player.x = 54;
+        player.y = 466;
+        player.velocityX = 0;
+        player.velocityY = 0;
+        player.onGround = true;
+        gameMessage.textContent = message;
+      }
+
+      function updateGame(deltaTime) {
+        const moveDirection = Number(gameKeys.has("ArrowRight")) - Number(gameKeys.has("ArrowLeft"));
+        player.velocityX = moveDirection * 280;
+        player.x = Math.max(0, Math.min(gameWidth - player.width, player.x + player.velocityX * deltaTime));
+
+        const previousBottom = player.y + player.height;
+        player.velocityY += 1700 * deltaTime;
+        player.y += player.velocityY * deltaTime;
+        player.onGround = false;
+
+        platforms.forEach((platform) => {
+          const overlapsPlatform = player.x + player.width > platform.x
+            && player.x < platform.x + platform.width;
+          const landsOnPlatform = player.velocityY >= 0
+            && previousBottom <= platform.y
+            && player.y + player.height >= platform.y;
+
+          if (overlapsPlatform && landsOnPlatform) {
+            player.y = platform.y - player.height;
+            player.velocityY = 0;
+            player.onGround = true;
+          }
+        });
+
+        coins.forEach((coin) => {
+          if (coin.collected) {
+            return;
+          }
+
+          const closestX = Math.max(player.x, Math.min(coin.x, player.x + player.width));
+          const closestY = Math.max(player.y, Math.min(coin.y, player.y + player.height));
+          const distanceX = coin.x - closestX;
+          const distanceY = coin.y - closestY;
+
+          if (distanceX * distanceX + distanceY * distanceY <= coin.radius * coin.radius) {
+            coin.collected = true;
+            collectedCoins += 1;
+            gameScore.textContent = String(collectedCoins);
+            gameMessage.textContent = collectedCoins === coins.length
+              ? "Todas as moedas coletadas! Você venceu!"
+              : "Moeda coletada!";
+          }
+        });
+
+        const hitSpikes = spikes.some((spike) => (
+          player.x + player.width > spike.x
+          && player.x < spike.x + spike.width
+          && player.y + player.height > spike.y - spike.height
+          && player.y < spike.y
+        ));
+
+        if (hitSpikes) {
+          resetPlayer("Você tocou nos espinhos. Tente novamente!");
+        } else if (player.y > gameHeight) {
+          resetPlayer("Você caiu! Tente novamente.");
+        }
+      }
+
+      function gameLoop(timestamp) {
+        if (!gameRunning) {
+          return;
+        }
+
+        const deltaTime = previousFrameTime
+          ? Math.min((timestamp - previousFrameTime) / 1000, 1 / 30)
+          : 0;
+        previousFrameTime = timestamp;
+        updateGame(deltaTime);
+        drawGame();
+        gameFrame = window.requestAnimationFrame(gameLoop);
+      }
+
+      function startGame() {
+        if (!gameContext || gameRunning) {
+          return;
+        }
+
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        gameCanvas.width = gameWidth * pixelRatio;
+        gameCanvas.height = gameHeight * pixelRatio;
+        gameContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        gameRunning = true;
+        previousFrameTime = 0;
+        drawGame();
+        gameFrame = window.requestAnimationFrame(gameLoop);
+      }
+
+      function pauseGame() {
+        gameRunning = false;
+        gameKeys.clear();
+        previousFrameTime = 0;
+        if (gameFrame !== null) {
+          window.cancelAnimationFrame(gameFrame);
+          gameFrame = null;
+        }
+      }
+
+      function openGame(addHistory = true) {
+        beginModal("jogo", addHistory);
+        const tvBounds = tvHotspot.getBoundingClientRect();
+        gameModal.style.removeProperty("--game-origin-x");
+        gameModal.style.removeProperty("--game-origin-y");
+        gameModal.classList.add("is-visible");
+        gameModal.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        ps1Audio.pause();
+
+        const panelBounds = gamePanel.getBoundingClientRect();
+        const panelLeft = panelBounds.left - (gamePanel.offsetWidth - panelBounds.width) / 2;
+        const panelTop = panelBounds.top - (gamePanel.offsetHeight - panelBounds.height) / 2;
+        gameModal.style.setProperty(
+          "--game-origin-x",
+          `${tvBounds.left + tvBounds.width / 2 - panelLeft}px`,
+        );
+        gameModal.style.setProperty(
+          "--game-origin-y",
+          `${tvBounds.top + tvBounds.height / 2 - panelTop}px`,
+        );
+
+        window.requestAnimationFrame(() => {
+          if (!gameModal.classList.contains("is-visible")) {
+            return;
+          }
+          gameModal.classList.add("is-open");
+          gameCloseButton.focus();
+          startGame();
+        });
+      }
+
+      function hideGame() {
+        pauseGame();
+        gameModal.classList.remove("is-open", "is-visible");
+        gameModal.setAttribute("aria-hidden", "true");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        tvHotspot.focus();
+      }
+
+      function handleGameKeydown(event) {
+        if (!gameRunning) {
+          return;
+        }
+
+        if (["ArrowLeft", "ArrowRight", "ArrowUp"].includes(event.key)) {
+          event.preventDefault();
+        }
+
+        if (event.key === "ArrowUp" && player.onGround) {
+          player.velocityY = -650;
+          player.onGround = false;
+        }
+
+        gameKeys.add(event.key);
+      }
+
+      function handleGameKeyup(event) {
+        gameKeys.delete(event.key);
+      }
+
+      function delayGifAnimation(canvas, source, delay, label) {
+        const frozenFrame = new Image();
+        frozenFrame.addEventListener("load", () => {
+          const context = canvas.getContext("2d");
+          if (!context) {
+            console.error(`Não foi possível preparar o primeiro quadro do GIF ${label}.`);
+            return;
+          }
+
+          canvas.width = frozenFrame.naturalWidth;
+          canvas.height = frozenFrame.naturalHeight;
+          context.drawImage(frozenFrame, 0, 0);
+        });
+        frozenFrame.addEventListener("error", () => {
+          console.error(`Não foi possível carregar o GIF ${label}.`);
+        });
+        frozenFrame.src = source;
+
+        window.addEventListener("load", () => {
+          window.setTimeout(() => {
+            const animatedGif = new Image();
+            animatedGif.id = canvas.id;
+            animatedGif.alt = "";
+            animatedGif.loading = "eager";
+            animatedGif.addEventListener("load", () => {
+              canvas.replaceWith(animatedGif);
+            }, { once: true });
+
+            const animatedSource = new URL(frozenFrame.src);
+            animatedSource.searchParams.set("play", Date.now().toString());
+            animatedGif.src = animatedSource.href;
+            animatedGif.addEventListener("error", () => {
+              console.error(`Não foi possível iniciar a animação do GIF ${label}.`);
+            });
+          }, delay);
+        });
+      }
+
+      delayGifAnimation(dogCanvas, "Imagens/videos/cachorro.gif.gif", 2000, "do cachorro");
+
+      function openStartModal(triggerElement = monitorHotspot, centered = false, addHistory = true) {
+        beginModal("inicio", addHistory);
+        modalTriggers.inicio = triggerElement;
+        let originX = window.innerWidth / 2;
+        let originY = window.innerHeight / 2;
+        if (!centered) {
+          const hotspotBounds = triggerElement.getBoundingClientRect();
+          originX = hotspotBounds.left + hotspotBounds.width / 2;
+          originY = hotspotBounds.top + hotspotBounds.height / 2;
+        }
+
+        returnFocusElement = triggerElement;
+        window.clearTimeout(startModalHideTimeout);
+        startModal.style.setProperty("--modal-origin-x", `${originX}px`);
+        startModal.style.setProperty("--modal-origin-y", `${originY}px`);
+        startModal.inert = false;
+        startModal.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        siteHeader.classList.add("is-behind-modal");
+        startModal.classList.add("preparando");
+
+        window.requestAnimationFrame(() => {
+          if (startModal.getAttribute("aria-hidden") === "true") {
+            return;
+          }
+
+          startModal.getBoundingClientRect();
+          startModal.classList.add("expandido");
+          startModalCloseButton.focus();
+        });
+      }
+
+      function finishStartModalClose() {
+        window.clearTimeout(startModalHideTimeout);
+        startModalHideTimeout = null;
+        startModal.classList.remove("preparando");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        siteHeader.classList.remove("is-behind-modal");
+        returnFocusElement.focus();
+      }
+
+      function hideStartModal() {
+        if (!startModal.classList.contains("preparando")) {
+          return;
+        }
+
+        const wasExpanded = startModal.classList.contains("expandido");
+        startModal.classList.remove("expandido");
+        startModal.inert = true;
+        startModal.setAttribute("aria-hidden", "true");
+        window.clearTimeout(startModalHideTimeout);
+
+        const closeDelay = !wasExpanded || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? 1
+          : 600;
+        startModalHideTimeout = window.setTimeout(() => {
+          if (startModal.classList.contains("expandido")) {
+            return;
+          }
+
+          finishStartModalClose();
+        }, closeDelay);
+      }
+
+      function openProjectsModal(triggerElement = pcHotspot, addHistory = true) {
+        beginModal("projetos", addHistory);
+        modalTriggers.projetos = triggerElement;
+        returnFocusElement = triggerElement;
+        keyboardAudio.pause();
+        projectsModal.scrollTop = 0;
+        projectsModal.inert = false;
+        projectsModal.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        siteHeader.classList.add("is-behind-modal");
+        projectsModal.classList.add("preparando");
+        projectsModal.getBoundingClientRect();
+        projectsModal.classList.add("expandido");
+        projectsCloseButton.focus();
+      }
+
+      function hideProjectsModal() {
+        projectsModal.classList.remove("expandido", "preparando");
+        projectsModal.inert = true;
+        projectsModal.setAttribute("aria-hidden", "true");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        siteHeader.classList.remove("is-behind-modal");
+        returnFocusElement.focus();
+      }
+
+      function abrirDetalhesProjeto(id, addHistory = true) {
+        if (!Object.hasOwn(dadosProjetos, id)) {
+          console.error(`Projeto não encontrado: ${id}`);
+          return;
+        }
+
+        const projeto = dadosProjetos[id];
+        if (activeModal === "projetos") {
+          detailsTrigger = projectCards.find((card) => card.contains(document.activeElement)) || null;
+          hideActiveModal();
+        }
+        beginModal("detalhes-projeto", false);
+        if (addHistory) {
+          history.pushState({ modal: "detalhes-projeto", projeto: id }, "", "#detalhes-projeto");
+        }
+        document.querySelector("#detalhe-titulo").textContent = projeto.titulo;
+        document.querySelector("#detalhe-texto").textContent = projeto.texto;
+        const images = projeto.imagens.map((src) => {
+          const image = document.createElement("img");
+          image.src = src;
+          image.alt = `Imagem do projeto ${projeto.titulo}`;
+          return image;
+        });
+        document.querySelector("#detalhe-imagens").replaceChildren(...images);
+        detailsContent.scrollTop = 0;
+        detailsModal.inert = false;
+        detailsModal.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        siteHeader.classList.add("is-behind-modal");
+        detailsModal.classList.add("preparando");
+        detailsModal.getBoundingClientRect();
+        detailsModal.classList.add("expandido");
+        detailsCloseButton.focus();
+      }
+
+      window.abrirDetalhesProjeto = abrirDetalhesProjeto;
+
+      function hideDetailsModal() {
+        detailsModal.classList.remove("expandido", "preparando");
+        detailsModal.inert = true;
+        detailsModal.setAttribute("aria-hidden", "true");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        siteHeader.classList.remove("is-behind-modal");
+        returnFocusElement.focus();
+      }
+
+      function openContactModal(triggerElement, addHistory = true) {
+        beginModal("contato", addHistory);
+        modalTriggers.contato = triggerElement;
+        returnFocusElement = triggerElement;
+        const bounds = triggerElement.getBoundingClientRect();
+        contactModal.style.setProperty("--contact-origin-x", `${bounds.left + bounds.width / 2}px`);
+        contactModal.style.setProperty("--contact-origin-y", `${bounds.top + bounds.height / 2}px`);
+        celularAudio.pause();
+        celularAudio.currentTime = 0;
+        contactModal.inert = false;
+        contactModal.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        siteHeader.classList.add("is-behind-modal");
+        contactModal.classList.add("preparando");
+        contactModal.getBoundingClientRect();
+        contactModal.classList.add("expandido");
+        contactCloseButton.focus();
+      }
+
+      function hideContactModal() {
+        contactModal.classList.remove("expandido", "preparando");
+        contactModal.inert = true;
+        contactModal.setAttribute("aria-hidden", "true");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        siteHeader.classList.remove("is-behind-modal");
+        returnFocusElement.focus();
+      }
+
+      function openResumeModal(triggerElement = modalTriggers.curriculo, addHistory = true) {
+        beginModal("curriculo", addHistory);
+        modalTriggers.curriculo = triggerElement;
+        returnFocusElement = triggerElement;
+        resumeModal.querySelector(".modal-curriculo__scroll").scrollTop = 0;
+        resumeModal.inert = false;
+        resumeModal.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        siteHeader.classList.add("is-behind-modal");
+        resumeModal.classList.add("preparando");
+        resumeModal.getBoundingClientRect();
+        resumeModal.classList.add("expandido");
+        resumeCloseButton.focus();
+      }
+
+      function hideResumeModal() {
+        resumeModal.classList.remove("expandido", "preparando");
+        resumeModal.inert = true;
+        resumeModal.setAttribute("aria-hidden", "true");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        siteHeader.classList.remove("is-behind-modal");
+        returnFocusElement.focus();
+      }
+
+      function openPortfolio(zoomOrigin = monitorHotspot, addHistory = true) {
+        beginModal("portfolio", addHistory);
+        const hotspotBounds = zoomOrigin.getBoundingClientRect();
+        returnFocusElement = document.activeElement instanceof HTMLElement && document.activeElement !== document.body
+          ? document.activeElement
+          : zoomOrigin;
+        modalTriggers.portfolio = returnFocusElement;
+
+        portfolioScreen.style.setProperty("--zoom-x", `${hotspotBounds.left + hotspotBounds.width / 2}px`);
+        portfolioScreen.style.setProperty("--zoom-y", `${hotspotBounds.top + hotspotBounds.height / 2}px`);
+        portfolioScreen.inert = false;
+        portfolioScreen.setAttribute("aria-hidden", "false");
+        roomScene.inert = true;
+        siteHeader.inert = true;
+        portfolioScreen.scrollTop = 0;
+        window.requestAnimationFrame(() => {
+          if (portfolioScreen.inert) {
+            return;
+          }
+          portfolioScreen.classList.add("is-open");
+          portfolioCloseButton.focus();
+        });
+      }
+
+      function hidePortfolio() {
+        portfolioScreen.classList.remove("is-open");
+        portfolioScreen.inert = true;
+        portfolioScreen.setAttribute("aria-hidden", "true");
+        roomScene.inert = false;
+        siteHeader.inert = false;
+        returnFocusElement.focus();
+      }
+
+      function beginModal(name, addHistory) {
+        if (startModalHideTimeout !== null) {
+          finishStartModalClose();
+        }
+        siteFooter.inert = true;
+        if (addHistory) {
+          history.pushState({ modal: name }, "", `#${name}`);
+        }
+        activeModal = name;
+      }
+
+      function hideActiveModal() {
+        const name = activeModal;
+        activeModal = null;
+        siteFooter.inert = false;
+        if (name === "contato") hideContactModal();
+        else if (name === "curriculo") hideResumeModal();
+        else if (name === "portfolio") hidePortfolio();
+        else if (name === "projetos") hideProjectsModal();
+        else if (name === "detalhes-projeto") hideDetailsModal();
+        else if (name === "jogo") hideGame();
+        else if (name === "inicio") hideStartModal();
+      }
+
+      function closeActiveModal() {
+        const name = activeModal;
+        if (!name) {
+          return;
+        }
+        hideActiveModal();
+        if (history.state?.modal === name) {
+          history.back();
+        }
+      }
+
+      function restoreModal(name, state = history.state) {
+        if (name === "contato") openContactModal(modalTriggers.contato, false);
+        else if (name === "curriculo") openResumeModal(modalTriggers.curriculo, false);
+        else if (name === "portfolio") openPortfolio(modalTriggers.portfolio, false);
+        else if (name === "projetos") {
+          openProjectsModal(modalTriggers.projetos, false);
+          if (detailsTrigger) detailsTrigger.focus();
+        }
+        else if (name === "detalhes-projeto") abrirDetalhesProjeto(state?.projeto, false);
+        else if (name === "jogo") openGame(false);
+        else if (name === "inicio") openStartModal(modalTriggers.inicio, false, false);
+      }
+
+      function handlePortfolioKeydown(event) {
+        if (!detailsModal.inert) {
+          if (event.key === "Escape") {
+            closeActiveModal();
+          } else if (event.key === "Tab") {
+            event.preventDefault();
+            if (document.activeElement === detailsCloseButton && !event.shiftKey) {
+              detailsContent.focus();
+            } else {
+              detailsCloseButton.focus();
+            }
+          }
+          return;
+        }
+
+        if (!projectsModal.inert) {
+          if (event.key === "Escape") {
+            closeActiveModal();
+          } else if (event.key === "Tab") {
+            const focusableElements = [projectsCloseButton, ...projectCards];
+            const currentIndex = focusableElements.indexOf(document.activeElement);
+            const direction = event.shiftKey ? -1 : 1;
+            const nextIndex = currentIndex === -1
+              ? (event.shiftKey ? focusableElements.length - 1 : 0)
+              : (currentIndex + direction + focusableElements.length) % focusableElements.length;
+            event.preventDefault();
+            focusableElements[nextIndex].focus();
+          }
+          return;
+        }
+
+        if (!contactModal.inert) {
+          if (event.key === "Escape") {
+            closeActiveModal();
+          } else if (event.key === "Tab") {
+            const focusableElements = [...contactModal.querySelectorAll('a[href], button:not([disabled])')];
+            const currentIndex = focusableElements.indexOf(document.activeElement);
+            const direction = event.shiftKey ? -1 : 1;
+            const nextIndex = currentIndex === -1
+              ? (event.shiftKey ? focusableElements.length - 1 : 0)
+              : (currentIndex + direction + focusableElements.length) % focusableElements.length;
+            event.preventDefault();
+            focusableElements[nextIndex].focus();
+          }
+          return;
+        }
+
+        if (resumeModal.classList.contains("preparando")) {
+          if (!resumeModal.inert && event.key === "Escape") {
+            closeActiveModal();
+          } else if (!resumeModal.inert && event.key === "Tab") {
+            const focusableElements = [...resumeModal.querySelectorAll('a[href], button:not([disabled])')];
+            const currentIndex = focusableElements.indexOf(document.activeElement);
+            const direction = event.shiftKey ? -1 : 1;
+            const nextIndex = currentIndex === -1
+              ? (event.shiftKey ? focusableElements.length - 1 : 0)
+              : (currentIndex + direction + focusableElements.length) % focusableElements.length;
+
+            event.preventDefault();
+            focusableElements[nextIndex].focus();
+          }
+          return;
+        }
+
+        if (startModal.classList.contains("preparando")) {
+          if (!startModal.inert && event.key === "Escape") {
+            closeActiveModal();
+          } else if (!startModal.inert && event.key === "Tab") {
+            event.preventDefault();
+            startModalCloseButton.focus();
+          }
+          return;
+        }
+
+        if (gameModal.classList.contains("is-open")) {
+          if (event.key === "Escape") {
+            closeActiveModal();
+          } else if (event.key === "Tab") {
+            event.preventDefault();
+            gameCloseButton.focus();
+          }
+          return;
+        }
+
+        if (event.key === "Escape" && portfolioScreen.classList.contains("is-open")) {
+          closeActiveModal();
+          return;
+        }
+
+        if (event.key !== "Tab" || !portfolioScreen.classList.contains("is-open")) {
+          return;
+        }
+
+        const focusableElements = [...portfolioScreen.querySelectorAll('a[href], button:not([disabled])')];
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+
+      function unlockAudio() {
+        document.querySelectorAll("audio").forEach((audio) => {
+          const previousVolume = audio.volume;
+          try {
+            audio.volume = 0;
+            const playback = audio.play();
+            playback?.catch((error) => {
+              if (error.name !== "AbortError") {
+                console.error("Não foi possível desbloquear o áudio.", error);
+              }
+            });
+          } catch (error) {
+            console.error("Não foi possível desbloquear o áudio.", error);
+          } finally {
+            try {
+              audio.pause();
+            } catch (error) {
+              console.error("Não foi possível pausar o áudio.", error);
+            }
+            try {
+              audio.volume = previousVolume;
+            } catch (error) {
+              console.error("Não foi possível restaurar o volume do áudio.", error);
+            }
+          }
+        });
+        audioInteraction = true;
+      }
+
+      function playKeyboardSound() {
+        if (!audioInteraction) {
+          return;
+        }
+
+        keyboardAudio.currentTime = 0;
+        keyboardAudio.play()?.catch((error) => {
+          console.error("Não foi possível reproduzir o som do teclado.", error);
+        });
+      }
+
+      celularHotspot.addEventListener("mouseenter", () => {
+        if (!audioInteraction) {
+          return;
+        }
+
+        celularAudio.currentTime = 0;
+        celularAudio.play()?.catch((error) => {
+          if (error.name !== "AbortError") {
+            console.error("Não foi possível reproduzir o som do celular.", error);
+          }
+        });
+      });
+      celularHotspot.addEventListener("mouseleave", () => {
+        celularAudio.pause();
+        celularAudio.currentTime = 0;
+      });
+
+      portfolioCloseButton.addEventListener("click", closeActiveModal);
+      projectsCloseButton.addEventListener("click", closeActiveModal);
+      detailsCloseButton.addEventListener("click", closeActiveModal);
+      projectCards.forEach((card) => {
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            card.click();
+          }
+        });
+      });
+      portfolioScreen.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const target = document.getElementById(link.getAttribute("href").slice(1));
+          if (target && portfolioScreen.contains(target)) {
+            event.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+      contactCloseButton.addEventListener("click", closeActiveModal);
+      contactModal.addEventListener("click", (event) => {
+        if (!event.target.closest(".modal-contato__phone")) {
+          closeActiveModal();
+        }
+      });
+      window.addEventListener("popstate", (event) => {
+        const nextModal = event.state?.modal;
+        if (activeModal !== nextModal) {
+          hideActiveModal();
+          restoreModal(nextModal, event.state);
+        }
+      });
+      startModalCloseButton.addEventListener("click", closeActiveModal);
+      resumeCloseButton.addEventListener("click", closeActiveModal);
+      gameCloseButton.addEventListener("click", closeActiveModal);
+      document.addEventListener("keydown", handlePortfolioKeydown);
+      document.addEventListener("keydown", handleGameKeydown);
+      document.addEventListener("keyup", handleGameKeyup);
+      document.body.addEventListener("click", unlockAudio, { once: true, capture: true });
+      pcHotspot.addEventListener("mouseenter", playKeyboardSound);
+      pcHotspot.addEventListener("mouseleave", () => keyboardAudio.pause());
+      tvHotspot.addEventListener("mouseenter", () => {
+        if (!audioInteraction) {
+          return;
+        }
+
+        ps1Audio.currentTime = 0;
+        ps1Audio.play()?.catch((error) => {
+          console.error("Não foi possível reproduzir o áudio do PS1.", error);
+        });
+      });
+      tvHotspot.addEventListener("mouseleave", () => ps1Audio.pause());
+      document.querySelectorAll(".hotspot").forEach((hotspot) => {
+        hotspot.addEventListener("click", () => {
+          if (hotspot === tvHotspot) {
+            openGame();
+          } else if (hotspot === monitorHotspot) {
+            openStartModal(hotspot);
+          } else if (hotspot === pcHotspot) {
+            openProjectsModal(hotspot);
+          } else if (hotspot === celularHotspot) {
+            openContactModal(hotspot);
+          } else {
+            openPortfolio(hotspot);
+          }
+        });
+        hotspot.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            if (hotspot === tvHotspot) {
+              openGame();
+            } else if (hotspot === monitorHotspot) {
+              openStartModal(hotspot);
+            } else if (hotspot === pcHotspot) {
+              openProjectsModal(hotspot);
+            } else if (hotspot === celularHotspot) {
+              openContactModal(hotspot);
+            } else {
+              openPortfolio(hotspot);
+            }
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-open-projects]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          openProjectsModal(link);
+        });
+      });
+
+      document.querySelectorAll("[data-open-contact]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          openContactModal(link);
+        });
+      });
+
+      document.querySelectorAll("[data-open-resume]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          if (contactModal.contains(link) && activeModal === "contato") {
+            hideActiveModal();
+          }
+          openResumeModal(link);
+        });
+      });
+
+      document.querySelectorAll("[data-open-start-modal]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          openStartModal(link, true);
+        });
+      });
+
+      restoreModal(history.state?.modal);
+
+    })();
+  </script>
+</body>
+</html>
